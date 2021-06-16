@@ -13,7 +13,6 @@ class PreferredMatch extends CI_Controller
 		$this->load->model('Onlinemodel');
 		$this->load->model('Register_Model');
 		$this->load->model('User_Model');
-		$this->load->model('CommonModel');
 		$this->load->model('PreferredMatchModel');
 
 		$this->load->library('email');
