@@ -37,7 +37,7 @@ class PreferredMatch extends CI_Controller
 //		Kint::dump($userData);
 //		exit(0);
 
-		$userHeight = $userData[0]['height'];
+		$userHeight = $userData[0]->height;
 
 		$matchLevel1 = $this->PreferredMatchModel->getMatchesLevel1($userHeight);
 		Kint::dump($matchLevel1);
