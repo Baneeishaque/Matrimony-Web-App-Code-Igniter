@@ -78,9 +78,9 @@
           <a class="dropdown-item" href="<?php echo base_url(); ?>index.php/user/matches">demo</a>
           <a class="dropdown-item" href="#">New Matches</a>
           <a class="dropdown-item" href="#">My Matches</a>
-          <a class="dropdown-item" href="#">Prefered Matches</a>
+          <a class="dropdown-item" href="<?php echo base_url(); ?>index.php/user/matches">Prefered Matches</a>
           <a class="dropdown-item" href="#">Match to Me</a>
-           <a class="dropdown-item" href="#">Mutual Matches</a>
+           <a class="dropdown-item" href="<?php echo base_url(); ?>index.php/user/matches">Mutual Matches</a>
             <a class="dropdown-item" href="#">Premium Matches</a>
              <a class="dropdown-item" href="#">Horoscop Matches</a>
         
