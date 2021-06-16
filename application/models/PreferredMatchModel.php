@@ -9,6 +9,11 @@ class PreferredMatchModel extends CI_Model
 		$this->load->database();
 	}
 
+	function getMatchesLevel1($userHeight)
+	{
+		$query = $this->db->get_where('register', array('height' => 'userHeight'));
+		return $query->result();
+	}
 
 //	public function insert_package($data)
 //	{

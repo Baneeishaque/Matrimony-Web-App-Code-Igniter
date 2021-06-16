@@ -9,13 +9,12 @@ class PreferredMatch extends CI_Controller
 
 		$this->load->helper('url');
 		$this->load->helper(['url', 'language']);
+
 		$this->load->model('Onlinemodel');
 		$this->load->model('Register_Model');
 		$this->load->model('User_Model');
-
-		//        $this->load->database();
-		//       $this->load->library(['ion_auth', 'form_validation']);
-		//       $this->lang->load('auth');
+		$this->load->model('CommonModel');
+		$this->load->model('PreferredMatchModel');
 
 		$this->load->library('email');
 		$this->load->library('form_validation');
@@ -32,15 +31,27 @@ class PreferredMatch extends CI_Controller
 	{
 		$id = $this->session->userdata('user_id');
 
-		$data['mydata'] = $this->User_Model->get_my($id);
+		$userData = $this->User_Model->get_my($id);
+		$userHeight = $userData['height'];
+		var_dump($userHeight);
+		$matchLevel1 = $this->PreferredMatchModel->getMatchesLevel1($userHeight);
+		var_dump($matchLevel1);
+
+		$data['mydata'] = $userData;
 		$data['package'] = $this->User_Model->get_package($id);
 
-		var_dump($data);
+//		var_dump($data);
 		exit(0);
 
 //		$this->load->view('headers/header_user', $data);
 //		$this->load->view('user/user', $data);
 //		$this->load->view('footers/footer_user');
+	}
+
+	public function getMatchesLevel1()
+	{
+
+
 	}
 
 //	public function search()

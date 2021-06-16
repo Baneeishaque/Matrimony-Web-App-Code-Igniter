@@ -5,7 +5,6 @@ class User_Model extends CI_Model
 	function __construct()
 	{
 		parent::__construct();
-
 		$this->load->database();
 	}
 
@@ -19,8 +18,8 @@ class User_Model extends CI_Model
 
 	public function key($key)
 	{
-
 		if (!$key == NULL) {
+
 			$this->db->select('*');
 			$this->db->from('faq');
 			$this->db->where("word LIKE '%$key%'");
@@ -34,9 +33,7 @@ class User_Model extends CI_Model
 
 	public function insert_couples($data)
 	{
-
 		$this->db->insert('happy_couples', $data);
-
 	}
 
 
@@ -50,10 +47,10 @@ class User_Model extends CI_Model
 		if ($query->num_rows() == 1) {
 
 			return TRUE;
+
 		} else {
 
 			return FALSE;
-
 		}
 	}
 
