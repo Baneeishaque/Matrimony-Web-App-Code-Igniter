@@ -75,6 +75,7 @@
         MATCHES
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="<?php echo base_url(); ?>index.php/user/matches">demo</a>
           <a class="dropdown-item" href="#">New Matches</a>
           <a class="dropdown-item" href="#">My Matches</a>
           <a class="dropdown-item" href="#">Prefered Matches</a>

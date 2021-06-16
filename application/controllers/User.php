@@ -175,6 +175,32 @@ class User extends CI_Controller {
 
 	}
 
+  public function matches()
+  {
+    $id=$this->session->userdata('user_id');
+    
+    $data['mydata'] = $this->User_Model->get_my($id);
+    $data['package'] = $this->User_Model->get_package($id);
+    $data['marital_status'] = $this->Register_Model->getdata('marital_status');
+    $data['religion'] = $this->Register_Model->getdata('religion');
+    $data['education'] = $this->Register_Model->getdata('education');
+    $data['job_category'] = $this->Register_Model->getdata('job_category');
+    $data['states'] = $this->Register_Model->getdata('states');
+    $data['complexion'] = $this->Register_Model->getdata('complexion');
+    $data['star'] = $this->Register_Model->getdata('star');
+    $data['jathakam'] = $this->Register_Model->getdata('jathakam');
+    $data['languages'] = $this->Register_Model->getdata('languages');
+    $data['physical_status'] = $this->Register_Model->getdata('physical_status');
+    $data['income'] = $this->Register_Model->getdata('income');
+    $data['family_status'] = $this->Register_Model->getdata('family_status');
+
+
+    $this->load->view('headers/header_user',$data);
+    $this->load->view('user/matches',$data);
+    $this->load->view('footers/footer_user');
+
+  }
+
 
 
 

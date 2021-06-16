@@ -667,6 +667,32 @@ $(document).ready(function() {
        
      });
 
+      $(document).ready(function(){
+        $('#religion2').change(function(){
+          var religion_id = $('#religion2').val();
+
+          if(religion_id != '')
+          {
+           $.ajax({
+            url:"<?php echo site_url('Register/get_cast');?>",
+            method:"POST",
+            data:{religion_id:religion_id},
+            success:function(data)
+            {
+
+             $('#cast2').html(data);
+           }
+         });
+         }
+         else
+         {
+           $('#cast2').html('<option value="">Select Cast</option>');
+
+         }
+       });
+
+      });
+
 
 
       $(document).ready(function(){
@@ -810,6 +836,150 @@ $(document).ready(function() {
       });
 
  </script>
+
+
+ <script>
+  $(function() {
+    var $tabButtonItem = $('#tab-button li'),
+    $tabSelect = $('#tab-select'),
+    $tabContents = $('.tab-contents'),
+    activeClass = 'is-active';
+
+    $tabButtonItem.first().addClass(activeClass);
+    $tabContents.not(':first').hide();
+
+    $tabButtonItem.find('a').on('click', function(e) {
+      var target = $(this).attr('href');
+
+      $tabButtonItem.removeClass(activeClass);
+      $(this).parent().addClass(activeClass);
+      $tabSelect.val(target);
+      $tabContents.hide();
+      $(target).show();
+      e.preventDefault();
+    });
+
+    $tabSelect.on('change', function() {
+      var target = $(this).val(),
+      targetSelectNum = $(this).prop('selectedIndex');
+
+      $tabButtonItem.removeClass(activeClass);
+      $tabButtonItem.eq(targetSelectNum).addClass(activeClass);
+      $tabContents.hide();
+      $(target).show();
+    });
+  });
+
+  var inputLeft = document.getElementById("input-left");
+  var inputRight = document.getElementById("input-right");
+
+  var thumbLeft = document.querySelector(".slider > .thumb.left");
+  var thumbRight = document.querySelector(".slider > .thumb.right");
+  var range = document.querySelector(".slider > .range");
+
+  function setLeftValue() {
+    var _this = inputLeft,
+    min = parseInt(_this.min),
+    max = parseInt(_this.max);
+
+    _this.value = Math.min(parseInt(_this.value), parseInt(inputRight.value) - 1);
+
+    var percent = ((_this.value - min) / (max - min)) * 100;
+
+    thumbLeft.style.left = percent + "%";
+    range.style.left = percent + "%";
+  }
+  setLeftValue();
+
+  function setRightValue() {
+    var _this = inputRight,
+    min = parseInt(_this.min),
+    max = parseInt(_this.max);
+
+    _this.value = Math.max(parseInt(_this.value), parseInt(inputLeft.value) + 1);
+
+    var percent = ((_this.value - min) / (max - min)) * 100;
+
+    thumbRight.style.right = (100 - percent) + "%";
+    range.style.right = (100 - percent) + "%";
+  }
+  setRightValue();
+
+  inputLeft.addEventListener("input", setLeftValue);
+  inputRight.addEventListener("input", setRightValue);
+
+  inputLeft.addEventListener("mouseover", function() {
+    thumbLeft.classList.add("hover");
+  });
+  inputLeft.addEventListener("mouseout", function() {
+    thumbLeft.classList.remove("hover");
+  });
+  inputLeft.addEventListener("mousedown", function() {
+    thumbLeft.classList.add("active");
+  });
+  inputLeft.addEventListener("mouseup", function() {
+    thumbLeft.classList.remove("active");
+  });
+
+  inputRight.addEventListener("mouseover", function() {
+    thumbRight.classList.add("hover");
+  });
+  inputRight.addEventListener("mouseout", function() {
+    thumbRight.classList.remove("hover");
+  });
+  inputRight.addEventListener("mousedown", function() {
+    thumbRight.classList.add("active");
+  });
+  inputRight.addEventListener("mouseup", function() {
+    thumbRight.classList.remove("active");
+  });
+
+
+
+
+
+</script>
+
+<script>
+
+  $(document).ready(function() {
+    // Configure/customize these variables.
+    var showChar = 68;  // How many characters are shown by default
+    var ellipsestext = "";
+    var moretext = "..More";
+    var lesstext = "Less";
+    
+
+    $('.moree').each(function() {
+      var content = $(this).html();
+
+      if(content.length > showChar) {
+
+        var c = content.substr(0, showChar);
+        var h = content.substr(showChar, content.length - showChar);
+
+        var html = c + '<span class="moreellipses">' + ellipsestext+ '&nbsp;</span><span class="morecontent"><span>' + h + '</span>&nbsp;&nbsp;<a href="" class="mmorelink">' + moretext + '</a></span>';
+
+        $(this).html(html);
+      }
+
+    });
+
+    $(".mmorelink").click(function(){
+      if($(this).hasClass("less")) {
+        $(this).removeClass("less");
+        $(this).html(moretext);
+      } else {
+        $(this).addClass("less");
+        $(this).html(lesstext);
+      }
+      $(this).parent().prev().toggle();
+      $(this).prev().toggle();
+      return false;
+    });
+  });
+
+</script>
 
   </body>
 </html>
