@@ -91,7 +91,7 @@
 						<a class="dropdown-item" href="<?php echo base_url(); ?>index.php/user/matches">demo</a>
 						<a class="dropdown-item" href="#">New Matches</a>
 						<a class="dropdown-item" href="#">My Matches</a>
-						<a class="dropdown-item" href="<?php echo base_url(); ?>index.php/user/preferredMatch">Preferred
+						<a class="dropdown-item" href="<?php echo base_url(); ?>index.php/preferredMatch">Preferred
 							Matches</a>
 						<a class="dropdown-item" href="#">Match to Me</a>
 						<a class="dropdown-item" href="<?php echo base_url(); ?>index.php/user/matches">Mutual
