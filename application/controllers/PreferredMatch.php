@@ -34,12 +34,13 @@ class PreferredMatch extends CI_Controller
 
 		$userData = $this->User_Model->get_my($id);
 //		var_dump($userData);
-		Kint::dump($userData);
-		exit(0);
+//		Kint::dump($userData);
+//		exit(0);
 
-		$userHeight = $userData['height'];
+		$userHeight = $userData[0]['height'];
 
 		$matchLevel1 = $this->PreferredMatchModel->getMatchesLevel1($userHeight);
+		Kint::dump($matchLevel1);
 
 		$data['mydata'] = $userData;
 		$data['package'] = $this->User_Model->get_package($id);
