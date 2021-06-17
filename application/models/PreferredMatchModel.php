@@ -9,11 +9,207 @@ class PreferredMatchModel extends CI_Model
 		$this->load->database();
 	}
 
-	function getMatchesLevel1($userHeight)
+	function getMatchesLevel2($userHeight,$userMaritalStatusid,$userPhysicalStatusid,$userReligionid,$userCastid,$userJobTitleid,$userHighestEducationid,$userStateid,$userDistrictid,$userIncomeid,$userComplexionid,$userBodyTypeid,$userFamilyStatusid,$userCountryid)
 	{
-		$query = $this->db->get_where('register', array('height' => 'userHeight'));
+		$this->db->select('*');
+		$this->db->from('register');
+		$this->db->where(array(
+			'height' => $userHeight,
+			'marital_status_id'=>$userMaritalStatusid,
+			'physical_status_id'=>$userPhysicalStatusid,
+			'religion_id'=>$userReligionid,'cast_id'=>$userCastid,
+			'jobtitle_id'=>$userJobTitleid,
+			'highest_education_id'=>$userHighestEducationid,
+			'p_state_id'=>$userStateid,
+			'p_district_id'=>$userDistrictid,
+			'income_id'=>$userIncomeid,
+			'complexion_id'=>$userComplexionid,
+			'body_type_id'=>$userBodyTypeid,
+			'family_status_id'=>$userFamilyStatusid,
+			'p_country_id'=>$userCountryid,
+		));
+		$this->db->join('users','register.web_id=users.id');
+		$this->db->order_by('users.created_on','desc');
+		$query=$this->db->get();
 		return $query->result();
 	}
+
+	function getMatchesLevel3($userHeight,$userMaritalStatusid,$userPhysicalStatusid,$userReligionid,$userCastid,$userJobTitleid,$userHighestEducationid,$userStateid,$userDistrictid,$userIncomeid,$userComplexionid,$userBodyTypeid,$userFamilyStatusid)
+	{
+		$this->db->select('*');
+		$this->db->from('register');
+		$this->db->where(array(
+			'height' => $userHeight,
+			'marital_status_id'=>$userMaritalStatusid,
+			'physical_status_id'=>$userPhysicalStatusid,
+			'religion_id'=>$userReligionid,'cast_id'=>$userCastid,
+			'jobtitle_id'=>$userJobTitleid,
+			'highest_education_id'=>$userHighestEducationid,
+			'p_state_id'=>$userStateid,
+			'p_district_id'=>$userDistrictid,
+			'income_id'=>$userIncomeid,
+			'complexion_id'=>$userComplexionid,
+			'body_type_id'=>$userBodyTypeid,
+			'family_status_id'=>$userFamilyStatusid,
+		));
+		$this->db->join('users','register.web_id=users.id');
+		$this->db->order_by('users.created_on','desc');
+		$query=$this->db->get();
+		return $query->result();
+	}
+
+	function getMatchesLevel4($userHeight,$userMaritalStatusid,$userPhysicalStatusid,$userReligionid,$userCastid,$userJobTitleid,$userHighestEducationid,$userStateid,$userDistrictid,$userIncomeid,$userComplexionid,$userBodyTypeid)
+	{
+		$this->db->select('*');
+		$this->db->from('register');
+		$this->db->where(array(
+			'height' => $userHeight,
+			'marital_status_id'=>$userMaritalStatusid,
+			'physical_status_id'=>$userPhysicalStatusid,
+			'religion_id'=>$userReligionid,'cast_id'=>$userCastid,
+			'jobtitle_id'=>$userJobTitleid,
+			'highest_education_id'=>$userHighestEducationid,
+			'p_state_id'=>$userStateid,
+			'p_district_id'=>$userDistrictid,
+			'income_id'=>$userIncomeid,
+			'complexion_id'=>$userComplexionid,
+			'body_type_id'=>$userBodyTypeid,
+		));
+		$this->db->join('users','register.web_id=users.id');
+		$this->db->order_by('users.created_on','desc');
+		$query=$this->db->get();
+		return $query->result();
+	}
+
+	function getMatchesLevel5($userHeight,$userMaritalStatusid,$userPhysicalStatusid,$userReligionid,$userCastid,$userJobTitleid,$userHighestEducationid,$userStateid,$userDistrictid,$userIncomeid)
+	{
+		$this->db->select('*');
+		$this->db->from('register');
+		$this->db->where(array(
+			'height' => $userHeight,
+			'marital_status_id'=>$userMaritalStatusid,
+			'physical_status_id'=>$userPhysicalStatusid,
+			'religion_id'=>$userReligionid,'cast_id'=>$userCastid,
+			'jobtitle_id'=>$userJobTitleid,
+			'highest_education_id'=>$userHighestEducationid,
+			'p_state_id'=>$userStateid,
+			'p_district_id'=>$userDistrictid,
+			'income_id'=>$userIncomeid,
+		));
+		$this->db->join('users','register.web_id=users.id');
+		$this->db->order_by('users.created_on','desc');
+		$query=$this->db->get();
+		return $query->result();
+	}
+	
+	function getMatchesLevel6($userHeight,$userMaritalStatusid,$userPhysicalStatusid,$userReligionid,$userCastid,$userJobTitleid,$userHighestEducationid,$userStateid,$userDistrictid)
+	{
+		$this->db->select('*');
+		$this->db->from('register');
+		$this->db->where(array(
+			'height' => $userHeight,
+			'marital_status_id'=>$userMaritalStatusid,
+			'physical_status_id'=>$userPhysicalStatusid,
+			'religion_id'=>$userReligionid,'cast_id'=>$userCastid,
+			'jobtitle_id'=>$userJobTitleid,
+			'highest_education_id'=>$userHighestEducationid,
+			'p_state_id'=>$userStateid,
+			'p_district_id'=>$userDistrictid,
+		));
+		$this->db->join('users','register.web_id=users.id');
+		$this->db->order_by('users.created_on','desc');
+		$query=$this->db->get();
+		return $query->result();
+	}
+
+	function getMatchesLevel7($userHeight,$userMaritalStatusid,$userPhysicalStatusid,$userReligionid,$userCastid,$userJobTitleid,$userHighestEducationid,$userStateid)
+	{
+		$this->db->select('*');
+		$this->db->from('register');
+		$this->db->where(array(
+			'height' => $userHeight,
+			'marital_status_id'=>$userMaritalStatusid,
+			'physical_status_id'=>$userPhysicalStatusid,
+			'religion_id'=>$userReligionid,'cast_id'=>$userCastid,
+			'jobtitle_id'=>$userJobTitleid,
+			'highest_education_id'=>$userHighestEducationid,
+			'p_state_id'=>$userStateid,
+		));
+		$this->db->join('users','register.web_id=users.id');
+		$this->db->order_by('users.created_on','desc');
+		$query=$this->db->get();
+		return $query->result();
+	}
+
+	function getMatchesLevel8($userHeight,$userMaritalStatusid,$userPhysicalStatusid,$userReligionid,$userCastid,$userJobTitleid,$userHighestEducationid)
+	{
+		$this->db->select('*');
+		$this->db->from('register');
+		$this->db->where(array(
+			'height' => $userHeight,
+			'marital_status_id'=>$userMaritalStatusid,
+			'physical_status_id'=>$userPhysicalStatusid,
+			'religion_id'=>$userReligionid,'cast_id'=>$userCastid,
+			'jobtitle_id'=>$userJobTitleid,
+			'highest_education_id'=>$userHighestEducationid,
+		));
+		$this->db->join('users','register.web_id=users.id');
+		$this->db->order_by('users.created_on','desc');
+		$query=$this->db->get();
+		return $query->result();
+	}
+
+	function getMatchesLevel9($userHeight,$userMaritalStatusid,$userPhysicalStatusid,$userReligionid,$userCastid,$userJobTitleid)
+	{
+		$this->db->select('*');
+		$this->db->from('register');
+		$this->db->where(array(
+			'height' => $userHeight,
+			'marital_status_id'=>$userMaritalStatusid,
+			'physical_status_id'=>$userPhysicalStatusid,
+			'religion_id'=>$userReligionid,'cast_id'=>$userCastid,
+			'jobtitle_id'=>$userJobTitleid,
+		));
+		$this->db->join('users','register.web_id=users.id');
+		$this->db->order_by('users.created_on','desc');
+		$query=$this->db->get();
+		return $query->result();
+	}
+
+	function getMatchesLevel10($userHeight,$userMaritalStatusid,$userPhysicalStatusid,$userReligionid,$userCastid)
+	{
+		$this->db->select('*');
+		$this->db->from('register');
+		$this->db->where(array(
+			'height' => $userHeight,
+			'marital_status_id'=>$userMaritalStatusid,
+			'physical_status_id'=>$userPhysicalStatusid,
+			'religion_id'=>$userReligionid,
+			'cast_id'=>$userCastid
+		));
+		$this->db->join('users','register.web_id=users.id');
+		$this->db->order_by('users.created_on','desc');
+		$query=$this->db->get();
+		return $query->result();
+	}
+
+	function getMatchesLevel11($userHeight,$userMaritalStatusid,$userPhysicalStatusid,$userReligionid)
+	{
+		$this->db->select('*');
+		$this->db->from('register');
+		$this->db->where(array(
+			'height' => $userHeight,
+			'marital_status_id'=>$userMaritalStatusid,
+			'physical_status_id'=>$userPhysicalStatusid,
+			'religion_id'=>$userReligionid,
+		));
+		$this->db->join('users','register.web_id=users.id');
+		$this->db->order_by('users.created_on','desc');
+		$query=$this->db->get();
+		return $query->result();
+	}
+
+
 
 //	public function insert_package($data)
 //	{

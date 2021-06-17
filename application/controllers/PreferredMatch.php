@@ -36,11 +36,50 @@ class PreferredMatch extends CI_Controller
 //		var_dump($userData);
 //		Kint::dump($userData);
 //		exit(0);
-
+        $userDOB=$userData[0]->dob;
 		$userHeight = $userData[0]->height;
+		$userMaritalStatusid=$userData[0]->marital_status_id;
+		$userPhysicalStatusid=$userData[0]->physical_status_id;
+		$userReligionid=$userData[0]->religion_id;
+		$userCastid=$userData[0]->cast_id;
+		$userJobTitleid=$userData[0]->jobtitle_id;
+		$userHighestEducationid=$userData[0]->highest_education_id;
+		$userStateid=$userData[0]->p_state_id;
+		$userDistrictid=$userData[0]->p_district_id;
+		$userIncomeid=$userData[0]->income_id;
+		$userComplexionid=$userData[0]->complexion_id;
+		$userBodyTypeid=$userData[0]->body_type_id;
+		$userFamilyStateid=$userData[0]->family_status_id;
+		$userCountryid=$userData[0]->p_country_id;
+		
 
-		$matchLevel1 = $this->PreferredMatchModel->getMatchesLevel1($userHeight);
-		Kint::dump($matchLevel1);
+
+
+		$matchLevel2 = $this->PreferredMatchModel->getMatchesLevel2($userHeight,$userMaritalStatusid,$userPhysicalStatusid,$userReligionid,$userCastid,$userJobTitleid,$userHighestEducationid,$userStateid,$userDistrictid,$userIncomeid,$userComplexionid,$userBodyTypeid,$userFamilyStateid,$userCountryid);
+
+		$matchLevel3 = $this->PreferredMatchModel->getMatchesLevel3($userHeight,$userMaritalStatusid,$userPhysicalStatusid,$userReligionid,$userCastid,$userJobTitleid,$userHighestEducationid,$userStateid,$userDistrictid,$userIncomeid,$userComplexionid,$userBodyTypeid,$userFamilyStateid);
+
+		$matchLevel4 = $this->PreferredMatchModel->getMatchesLevel4($userHeight,$userMaritalStatusid,$userPhysicalStatusid,$userReligionid,$userCastid,$userJobTitleid,$userHighestEducationid,$userStateid,$userDistrictid,$userIncomeid,$userComplexionid,$userBodyTypeid);
+
+		$matchLevel5 = $this->PreferredMatchModel->getMatchesLevel5($userHeight,$userMaritalStatusid,$userPhysicalStatusid,$userReligionid,$userCastid,$userJobTitleid,$userHighestEducationid,$userStateid,$userDistrictid,$userIncomeid,$userComplexionid);
+
+		$matchLevel6= $this->PreferredMatchModel->getMatchesLevel6($userHeight,$userMaritalStatusid,$userPhysicalStatusid,$userReligionid,$userCastid,$userJobTitleid,$userHighestEducationid,$userStateid,$userDistrictid,$userIncomeid);
+
+		$matchLevel7= $this->PreferredMatchModel->getMatchesLevel7($userHeight,$userMaritalStatusid,$userPhysicalStatusid,$userReligionid,$userCastid,$userJobTitleid,$userHighestEducationid,$userStateid,$userDistrictid);
+
+		$matchLevel8= $this->PreferredMatchModel->getMatchesLevel8($userHeight,$userMaritalStatusid,$userPhysicalStatusid,$userReligionid,$userCastid,$userJobTitleid,$userHighestEducationid,$userStateid);
+
+		$matchLevel9= $this->PreferredMatchModel->getMatchesLevel9($userHeight,$userMaritalStatusid,$userPhysicalStatusid,$userReligionid,$userCastid,$userJobTitleid,$userHighestEducationid);
+
+		$matchLevel10= $this->PreferredMatchModel->getMatchesLevel10($userHeight,$userMaritalStatusid,$userPhysicalStatusid,$userReligionid,$userCastid,$userJobTitleid);
+
+		$matchLevel11= $this->PreferredMatchModel->getMatchesLevel11($userHeight,$userMaritalStatusid,$userPhysicalStatusid,$userReligionid,$userCastid);
+
+		$result=array_merge($matchLevel2,$matchLevel3,$matchLevel4,$matchLevel5,$matchLevel6,$matchLevel7,$matchLevel8,$matchLevel9,$matchLevel10,$matchLevel11);
+		$result_unique=array_unique($result,SORT_REGULAR);
+		Kint::dump($result_unique);
+
+
 
 		$data['mydata'] = $userData;
 		$data['package'] = $this->User_Model->get_package($id);
