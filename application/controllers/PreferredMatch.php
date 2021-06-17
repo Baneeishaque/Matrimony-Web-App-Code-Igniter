@@ -5,97 +5,95 @@ require_once 'vendor/autoload.php';
 
 class PreferredMatch extends CI_Controller
 {
-	function __construct()
-	{
-		parent::__construct();
+    function __construct()
+    {
+        parent::__construct();
 
-		$this->load->helper('url');
-		$this->load->helper(['url', 'language']);
+        $this->load->helper('url');
+        $this->load->helper(['url', 'language']);
 
-		$this->load->model('Onlinemodel');
-		$this->load->model('Register_Model');
-		$this->load->model('User_Model');
-		$this->load->model('PreferredMatchModel');
+        $this->load->model('Onlinemodel');
+        $this->load->model('Register_Model');
+        $this->load->model('User_Model');
+        $this->load->model('PreferredMatchModel');
 
-		$this->load->library('email');
-		$this->load->library('form_validation');
-		$this->load->helper('form');
-		$this->load->library('session');
+        $this->load->library('email');
+        $this->load->library('form_validation');
+        $this->load->helper('form');
+        $this->load->library('session');
 
-		if (!$this->session->userdata('user_id')) {
-			// redirect them to the login page
-			redirect('register/login_view', 'refresh');
-		}
-	}
+        if (!$this->session->userdata('user_id')) {
+            // redirect them to the login page
+            redirect('register/login_view', 'refresh');
+        }
+    }
 
-	public function index()
-	{
-		$id = $this->session->userdata('user_id');
+    public function index()
+    {
+        $id = $this->session->userdata('user_id');
 
-		$userData = $this->User_Model->get_my($id);
-//		var_dump($userData);
+        $userData = $this->User_Model->get_my($id);
+
+        //		var_dump($userData);
 //		Kint::dump($userData);
 //		exit(0);
-        $userDOB=$userData[0]->dob;
-		$userHeight = $userData[0]->height;
-		$userMaritalStatusid=$userData[0]->marital_status_id;
-		$userPhysicalStatusid=$userData[0]->physical_status_id;
-		$userReligionid=$userData[0]->religion_id;
-		$userCastid=$userData[0]->cast_id;
-		$userJobTitleid=$userData[0]->jobtitle_id;
-		$userHighestEducationid=$userData[0]->highest_education_id;
-		$userStateid=$userData[0]->p_state_id;
-		$userDistrictid=$userData[0]->p_district_id;
-		$userIncomeid=$userData[0]->income_id;
-		$userComplexionid=$userData[0]->complexion_id;
-		$userBodyTypeid=$userData[0]->body_type_id;
-		$userFamilyStateid=$userData[0]->family_status_id;
-		$userCountryid=$userData[0]->p_country_id;
-		
 
+        $userDOB = $userData[0]->dob;
+        $userHeight = $userData[0]->height;
+        $userMaritalStatusId = $userData[0]->marital_status_id;
+        $userPhysicalStatusId = $userData[0]->physical_status_id;
+        $userReligionId = $userData[0]->religion_id;
+        $userCastId = $userData[0]->cast_id;
+        $userJobTitleId = $userData[0]->jobtitle_id;
+        $userHighestEducationId = $userData[0]->highest_education_id;
+        $userStateId = $userData[0]->p_state_id;
+        $userDistrictId = $userData[0]->p_district_id;
+        $userIncomeId = $userData[0]->income_id;
+        $userComplexionId = $userData[0]->complexion_id;
+        $userBodyTypeId = $userData[0]->body_type_id;
+        $userFamilyStateId = $userData[0]->family_status_id;
+        $userCountryId = $userData[0]->p_country_id;
 
+        $matchLevel2 = $this->PreferredMatchModel->getMatchesLevel2($userHeight, $userMaritalStatusId, $userPhysicalStatusId, $userReligionId, $userCastId, $userJobTitleId, $userHighestEducationId, $userStateId, $userDistrictId, $userIncomeId, $userComplexionId, $userBodyTypeId, $userFamilyStateId, $userCountryId);
 
-		$matchLevel2 = $this->PreferredMatchModel->getMatchesLevel2($userHeight,$userMaritalStatusid,$userPhysicalStatusid,$userReligionid,$userCastid,$userJobTitleid,$userHighestEducationid,$userStateid,$userDistrictid,$userIncomeid,$userComplexionid,$userBodyTypeid,$userFamilyStateid,$userCountryid);
+        $matchLevel3 = $this->PreferredMatchModel->getMatchesLevel3($userHeight, $userMaritalStatusId, $userPhysicalStatusId, $userReligionId, $userCastId, $userJobTitleId, $userHighestEducationId, $userStateId, $userDistrictId, $userIncomeId, $userComplexionId, $userBodyTypeId, $userFamilyStateId);
 
-		$matchLevel3 = $this->PreferredMatchModel->getMatchesLevel3($userHeight,$userMaritalStatusid,$userPhysicalStatusid,$userReligionid,$userCastid,$userJobTitleid,$userHighestEducationid,$userStateid,$userDistrictid,$userIncomeid,$userComplexionid,$userBodyTypeid,$userFamilyStateid);
+        $matchLevel4 = $this->PreferredMatchModel->getMatchesLevel4($userHeight, $userMaritalStatusId, $userPhysicalStatusId, $userReligionId, $userCastId, $userJobTitleId, $userHighestEducationId, $userStateId, $userDistrictId, $userIncomeId, $userComplexionId, $userBodyTypeId);
 
-		$matchLevel4 = $this->PreferredMatchModel->getMatchesLevel4($userHeight,$userMaritalStatusid,$userPhysicalStatusid,$userReligionid,$userCastid,$userJobTitleid,$userHighestEducationid,$userStateid,$userDistrictid,$userIncomeid,$userComplexionid,$userBodyTypeid);
+        $matchLevel5 = $this->PreferredMatchModel->getMatchesLevel5($userHeight, $userMaritalStatusId, $userPhysicalStatusId, $userReligionId, $userCastId, $userJobTitleId, $userHighestEducationId, $userStateId, $userDistrictId, $userIncomeId, $userComplexionId);
 
-		$matchLevel5 = $this->PreferredMatchModel->getMatchesLevel5($userHeight,$userMaritalStatusid,$userPhysicalStatusid,$userReligionid,$userCastid,$userJobTitleid,$userHighestEducationid,$userStateid,$userDistrictid,$userIncomeid,$userComplexionid);
+        $matchLevel6 = $this->PreferredMatchModel->getMatchesLevel6($userHeight, $userMaritalStatusId, $userPhysicalStatusId, $userReligionId, $userCastId, $userJobTitleId, $userHighestEducationId, $userStateId, $userDistrictId, $userIncomeId);
 
-		$matchLevel6= $this->PreferredMatchModel->getMatchesLevel6($userHeight,$userMaritalStatusid,$userPhysicalStatusid,$userReligionid,$userCastid,$userJobTitleid,$userHighestEducationid,$userStateid,$userDistrictid,$userIncomeid);
+        $matchLevel7 = $this->PreferredMatchModel->getMatchesLevel7($userHeight, $userMaritalStatusId, $userPhysicalStatusId, $userReligionId, $userCastId, $userJobTitleId, $userHighestEducationId, $userStateId, $userDistrictId);
 
-		$matchLevel7= $this->PreferredMatchModel->getMatchesLevel7($userHeight,$userMaritalStatusid,$userPhysicalStatusid,$userReligionid,$userCastid,$userJobTitleid,$userHighestEducationid,$userStateid,$userDistrictid);
+        $matchLevel8 = $this->PreferredMatchModel->getMatchesLevel8($userHeight, $userMaritalStatusId, $userPhysicalStatusId, $userReligionId, $userCastId, $userJobTitleId, $userHighestEducationId, $userStateId);
 
-		$matchLevel8= $this->PreferredMatchModel->getMatchesLevel8($userHeight,$userMaritalStatusid,$userPhysicalStatusid,$userReligionid,$userCastid,$userJobTitleid,$userHighestEducationid,$userStateid);
+        $matchLevel9 = $this->PreferredMatchModel->getMatchesLevel9($userHeight, $userMaritalStatusId, $userPhysicalStatusId, $userReligionId, $userCastId, $userJobTitleId, $userHighestEducationId);
 
-		$matchLevel9= $this->PreferredMatchModel->getMatchesLevel9($userHeight,$userMaritalStatusid,$userPhysicalStatusid,$userReligionid,$userCastid,$userJobTitleid,$userHighestEducationid);
+        $matchLevel10 = $this->PreferredMatchModel->getMatchesLevel10($userHeight, $userMaritalStatusId, $userPhysicalStatusId, $userReligionId, $userCastId, $userJobTitleId);
 
-		$matchLevel10= $this->PreferredMatchModel->getMatchesLevel10($userHeight,$userMaritalStatusid,$userPhysicalStatusid,$userReligionid,$userCastid,$userJobTitleid);
+        $matchLevel11 = $this->PreferredMatchModel->getMatchesLevel11($userHeight, $userMaritalStatusId, $userPhysicalStatusId, $userReligionId, $userCastId);
 
-		$matchLevel11= $this->PreferredMatchModel->getMatchesLevel11($userHeight,$userMaritalStatusid,$userPhysicalStatusid,$userReligionid,$userCastid);
+        $result = array_merge($matchLevel2, $matchLevel3, $matchLevel4, $matchLevel5, $matchLevel6, $matchLevel7, $matchLevel8, $matchLevel9, $matchLevel10, $matchLevel11);
+        $result_unique = array_unique($result, SORT_REGULAR);
+//		Kint::dump($result_unique);
 
-		$result=array_merge($matchLevel2,$matchLevel3,$matchLevel4,$matchLevel5,$matchLevel6,$matchLevel7,$matchLevel8,$matchLevel9,$matchLevel10,$matchLevel11);
-		$result_unique=array_unique($result,SORT_REGULAR);
-		Kint::dump($result_unique);
-
-
-
-		$data['mydata'] = $userData;
-		$data['package'] = $this->User_Model->get_package($id);
+        $data['mydata'] = $userData;
+        $data['package'] = $this->User_Model->get_package($id);
+        $data['search_results_unique'] = $result_unique;
 
 //		var_dump($data);
 
-//		$this->load->view('headers/header_user', $data);
-//		$this->load->view('user/user', $data);
-//		$this->load->view('footers/footer_user');
-	}
+        $this->load->view('headers/header_user', $data);
+        $this->load->view('user/preferredMatches', $data);
+        $this->load->view('footers/footer_user');
+    }
 
-	public function getMatchesLevel1()
-	{
+    public function getMatchesLevel1()
+    {
 
 
-	}
+    }
 
 //	public function search()
 //	{
