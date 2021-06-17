@@ -514,7 +514,7 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-12 nme-wrp">
                                         <h3 class="ser-res-name"><?php echo $result->first_name . ' ' . $result->last_name; ?> </h3>
-                                        &nbsp;| &nbsp;<span> MM-2527869</span>
+                                        &nbsp;| &nbsp;<span> <?php echo $result->web_id;?></span>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12 dis-flx">
                                         <h3 class="prem-mem"><i class="fas fa-crown comn-icon"></i>&nbsp; Premium Member
@@ -527,11 +527,7 @@
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-12 dis-flx"><i
                                                 class="fas fa-quote-left icn-qutes icn-qute"></i>
                                         <!-- <i class="fas fa-quote-left "></i> -->
-                                        <p class="moree ser-res-para">Irin is My daughter and His Education
-                                            Qualification is
-                                            Other Masters Degree in Engineering / Computers and His job Status is
-                                            Working
-                                            Abroad - European.We are Residing @ THRISSUR District , Kerala</span>
+                                        <p class="moree ser-res-para"><?php echo $result->aboutme;?></span>
                                     </div>
                                 </div>
                                 <hr>
@@ -539,36 +535,35 @@
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                                         <h6 class="ser-res-details"><i class="far fa-user-circle icn-res"></i>&nbsp; 27
                                             Yrs
-                                            | 157cm-5 ft 2 in</h6>
+                                            | <?php echo $result->height;  ?>cm-5 ft 2 in</h6>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                                         <h6 class="ser-res-details"><i
                                                     class="fas fa-map-marker-alt icn-res loct-ser-res"></i>&nbsp;
-                                            Eranakulam, Kerala, India</h6>
+                                                    <?php echo $result->p_city.' '.$result->state.''.$result->name; ?></h6> 
                                     </div>
                                 </div>
                                 <hr>
                                 <div class="row rw-bordr">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                                         <h6 class="ser-res-details"><i class="fas fa-book-open icn-res"
-                                                                       style="font-size: 11px;"></i>&nbsp; Christian,
-                                            Catholic</h6>
+                                                                       style="font-size: 11px;"></i>&nbsp; 
+                                                                       <?php echo $result->religion;?></h6>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                                         <h6 class="ser-res-details"><i class="fab fa-fort-awesome-alt icn-res"></i>&nbsp;
-                                            Syrian</h6>
+                                        <?php echo $result->cast;?></h6>
                                     </div>
                                 </div>
                                 <hr>
                                 <div class="row rw-bordr">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                                         <h6 class="ser-res-details"><i class="fas fa-graduation-cap icn-res"></i>&nbsp;
-                                            Btech</h6>
+                                        <?php echo $result->education;?></h6>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                                         <h6 class="ser-res-details"><i class="fas fa-suitcase icn-res"></i>&nbsp;
-                                            Software
-                                            Developer</h6>
+                                        <?php echo $result->job_title;?></h6>
                                     </div>
                                 </div>
                                 <hr>

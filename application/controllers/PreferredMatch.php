@@ -76,7 +76,8 @@ class PreferredMatch extends CI_Controller
 
         $result = array_merge($matchLevel2, $matchLevel3, $matchLevel4, $matchLevel5, $matchLevel6, $matchLevel7, $matchLevel8, $matchLevel9, $matchLevel10, $matchLevel11);
         $result_unique = array_unique($result, SORT_REGULAR);
-//		Kint::dump($result_unique);
+		// Kint::dump($result_unique);
+		// exit(0);
 
         $data['mydata'] = $userData;
         $data['package'] = $this->User_Model->get_package($id);

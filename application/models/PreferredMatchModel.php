@@ -11,26 +11,254 @@ class PreferredMatchModel extends CI_Model
 
 	function getMatchesLevel2($userHeight,$userMaritalStatusid,$userPhysicalStatusid,$userReligionid,$userCastid,$userJobTitleid,$userHighestEducationid,$userStateid,$userDistrictid,$userIncomeid,$userComplexionid,$userBodyTypeid,$userFamilyStatusid,$userCountryid)
 	{
-		$this->db->select('*');
-		$this->db->from('register');
+
+		$this->db->select(
+		
+			'register.`reg_id`,
+			 register.`web_id`,
+			 register. `profilefor_id`,
+			 register.`gender_id`,
+			 register.`dob`,
+			 register.`mothertoungue_id`,
+			 register.`religion_id`,
+			 register.`cast_id`,
+			 register.`sub_cast`,
+			 register.`cast_bar`,
+			 register.`religion_area_id`,
+			 register.`religion_requirement`,
+			 register.`country_code`,
+			 register.`marital_status_id`, 
+			 register.`height`,
+			 register.`physical_status_id`,
+			 register.`country_living_id`,
+			 register.`star_id`,
+			 register.`rassi_id`,
+			 register.`jathakam_id`,
+			 register.`native_place`,
+			 register.`landline`,
+			 register.`whatsapp`,
+			 register.`preffered_cont_type_id`,
+			 register.`contact_time`,
+			 register.`contact_name`, 
+			 register.`presnt_address`,
+			 register.`permnt_address`,
+			 register.`comm_address`,
+			 register.`route_recidence`, 
+			 register.`reci_landline`,
+			 register.`reci_mobile`,
+			 register.`reci_whatsapp`,
+			 register.`reci_relation_candinate`,
+			 register.`reci_contact_time`,
+			 register.`p_housename`,
+			 register.`p_country_id`,
+			 register.`p_state_id`,
+			 register.`p_city`, 
+			 register.`p_district_id`,
+			 register.`p_street`,
+			 register.`p_landmark`,
+			 register.`p_pincode`,
+			 register.`c_housename`,
+			 register.`c_country_id`,
+			 register.`c_state_id`, 
+			 register.`c_city`,
+			 register.`c_district_id`,
+			 register.`location`,
+			 register.`c_street`,
+			 register.`c_landmark`,
+			 register.`c_pincode`,
+			 register.`aboutme`, 
+			 register.`edu_cat_id`,
+			 register.`highest_education_id`,
+			 register.`education_details`,
+			 register.`education_addition`,
+			 register.`unversity`,
+			 register.`cource`,
+			 register.`year`,
+			 register.`employedin_id`,
+			 register.`job_cat_id`,
+			 register.`jobtitle_id`,
+			 register.`pro_career`,
+			 register.`company_name`,
+			 register.`work_country`,
+			 register.`work_state`,
+			 register.`work_district`,
+			 register.`work_city`,
+			 register.`income_id`,
+			 register.`father_name`,
+			 register.`father_familyname`,
+			 register.`father_edu_cat`, 
+			 register.`father_ancestary_name`,
+			 register.`father_nativeplace`,
+			 register.`mother_name`,
+			 register.`mother_familyname`,
+			 register.`mother_edu_cat`,
+			 register.`mother_ancestary_name`,
+			 register.`mother_nativeplace`, 
+			 register.`mother_employedin_id`, 
+			 register.`mother_job_cat`,
+			 register.`mother_job`,
+			 register.`father_employedin_id`, 
+			 register.`father_job_cat`,
+			 register.`father_job`, 
+			 register.`no_of_brothers_unmarried`, 
+			 register.`no_of_brothersmarried`, 
+			 register.`no_of_sisters_unmarried`, 
+			 register.`no_of_sistersmarried`, 
+			 register.`no_of_child`, 
+			 register.`parents_mobile_number`, 
+			 register.`family_type_id`,
+			 register.`family_status_id`, 
+			 register.`family_value_id`, 
+			 register.`guardian`, 
+			 register.`profile_sibling`, 
+			 register.`family_mother_tongue`, 
+			 register.`aboutfamily`,
+			 register.`complexion_id`, 
+			 register.`body_type_id`,
+			 register.`weight`,
+			 register.`bloodgroup_id`, 
+			 register.`assets`,
+			 register.`language_known`, 
+			 register.`drinking_id`, 
+			 register.`smoking_id`, 
+			 register.`diet_id`, 
+			 register.`eating_id`,
+			 register.`hobbies`,
+			 register.`interests`, 
+			 register.`blog`, 
+			 register.`othe_social`,
+			 register.`facebook`, 
+			 register.`adhar_no`, 
+			 register.`registration_status`, 
+			 register.`date`, 
+			 register.`varification_status`, 
+			 register.`profile_view`,
+			 register.`matching`,
+			 register.`staff_service`,
+								  
+			 users.`ip_address`,
+			 users.`username`,
+			 users.`password`,
+			 users.`email`,
+			 users.`activation_selector`,
+			 users.`activation_code`,
+			 users.`forgotten_password_selector`,
+			 users.`forgotten_password_code`,
+			 users.`forgotten_password_time`,
+			 users.`remember_selector`,
+			 users.`remember_code`,
+			 users.`created_on`,
+			 users.`last_login`,
+			 users.`active`,
+			 users.`first_name`,
+			 users.`last_name`,
+			 users.`company`, 
+			 users.`phone`, 
+			 users.`import`,
+			 users.`import_pass`,
+			 users.`registered_by`,
+								  
+			 states.`id`,
+			 states.`state`,
+
+			 religion.`religion_id`, 
+			 religion.`religion`,
+
+			 country.`id`,
+			 country.`iso`,
+			 country.`name`,
+			 country.`nicename`,
+			 country.`iso3`,
+			 country.`numcode`,
+			 country.`phonecode`,
+
+			 income.`income_id`,
+			 income.`income`,
+
+		     marital_status.`marital_status_id`,
+			 marital_status.`marital_status`,
+
+			 physical_status.`physical_status_id`,
+			 physical_status.`physical_status`,
+
+			 job.`job_id`,
+			 job.`job_cat_id`,
+			 job.`job_title`,
+
+			 education.`education_id`,
+			 education.`edu_category`,
+		     education.`education`,
+
+			 districts.`id`,
+			 districts.`state_id`,
+			 districts.`district`,
+								  
+			 complexion.`complexion_id`,
+			 complexion.`complexion`,
+
+			 body_type.`body_type_id`,
+			 body_type.`body_type`,
+
+			 family_status.`family_status_id`,
+			 family_status.`family_status`,
+
+			 cast.`cast_id`,
+			 cast.`religion_id`,
+			 cast.`cast`
+
+								 ');
+		$this->db->from('register,users,states,country,income,marital_status,physical_status,job,education,districts,complexion,body_type,family_status,cast,religion');
 		$this->db->where(array(
-			'height' => $userHeight,
-			'marital_status_id'=>$userMaritalStatusid,
-			'physical_status_id'=>$userPhysicalStatusid,
-			'religion_id'=>$userReligionid,'cast_id'=>$userCastid,
-			'jobtitle_id'=>$userJobTitleid,
-			'highest_education_id'=>$userHighestEducationid,
-			'p_state_id'=>$userStateid,
-			'p_district_id'=>$userDistrictid,
-			'income_id'=>$userIncomeid,
-			'complexion_id'=>$userComplexionid,
-			'body_type_id'=>$userBodyTypeid,
-			'family_status_id'=>$userFamilyStatusid,
-			'p_country_id'=>$userCountryid,
-		));
-		$this->db->join('users','register.web_id=users.id');
+			'register.height' => $userHeight,
+			'register.marital_status_id'=>$userMaritalStatusid,
+			'register.physical_status_id'=>$userPhysicalStatusid,
+			'register.religion_id'=>$userReligionid,
+			'register.cast_id'=>$userCastid,
+			'register.jobtitle_id'=>$userJobTitleid,
+			'register.highest_education_id'=>$userHighestEducationid,
+			'register.p_state_id'=>$userStateid,
+			'register.p_district_id'=>$userDistrictid,
+			'register.income_id'=>$userIncomeid,
+			'register.complexion_id'=>$userComplexionid,
+			'register.body_type_id'=>$userBodyTypeid,
+			'register.family_status_id'=>$userFamilyStatusid,
+			'register.p_country_id'=>$userCountryid,
+			'register.web_id'=>'users.id',
+			'register.p_state_id'=>'states.id',
+			'register.religion_id'=>'religion.religion_id',
+			'register.p_country_id'=>'country.id',
+			'register.income_id'=>'income.income_id',
+			'register.marital_status_id'=>'marital_status.marital_status_id',
+			'register.jobtitle_id'=>'job.job_id',
+			'register.highest_education_id'=>'education.education_id',
+			'register.p_district_id'=>'districts.id',
+			'register.complexion_id'=>'complexion.complexion_id',
+			'register.body_type_id'=>'body_type.body_type_id',
+			'register.family_status_id'=>'family_status.family_status_id',
+			'register.cast_id'=>'cast.cast_id'
+				));
+				
+		// $this->db->join('users','register.web_id=users.id');
+		// $this->db->join('states','register.p_state_id=states.id');
+		// $this->db->join('religion','register.religion_id=religion.religion_id');
+		// $this->db->join('country','register.p_country_id=country.id');
+		// $this->db->join('income','register.income_id=income.income_id');
+		// $this->db->join('marital_status','register.marital_status_id=marital_status.marital_status_id');
+		// $this->db->join('physical_status','register.physical_status_id=physical_status.physical_status_id');
+		// $this->db->join('job','register.jobtitle_id=job.job_id');
+		// $this->db->join('education','register.highest_education_id=education.education_id');
+		// $this->db->join('districts','register.p_district_id=districts.id');
+		// $this->db->join('complexion','register.complexion_id=complexion.complexion_id');
+		// $this->db->join('body_type','register.body_type_id=body_type.body_type_id');
+		// $this->db->join('family_status','register.family_status_id=family_status.family_status_id');
+		// $this->db->join('cast','register.cast_id=cast.cast_id');
+
+
+
 		$this->db->order_by('users.created_on','desc');
 		$query=$this->db->get();
+		echo $this->db->last_query();
+		exit(0);
 		return $query->result();
 	}
 
