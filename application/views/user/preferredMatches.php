@@ -96,13 +96,13 @@
 													<span thumb style="left:30%;"></span>
 													<span thumb style="left:60%;"></span>
 													<div sign style="left:30%;">
-														<span id="value">30</span>
+														<span id="value">25</span>
 													</div>
 													<div sign style="left:60%;">
-														<span id="value">60</span>
+														<span id="value">30</span>
 													</div>
 												</div>
-												<input type="range" tabindex="0" value="30" max="100" min="0" step="1"
+												<input type="range" tabindex="0" value="25" max="80" min="18" step="1"
 													   oninput="
   this.value=Math.min(this.value,this.parentNode.childNodes[5].value-1);
   var value=(100/(parseInt(this.max)-parseInt(this.min)))*parseInt(this.value)-(100/(parseInt(this.max)-parseInt(this.min)))*parseInt(this.min);
@@ -111,7 +111,7 @@
   children[5].style.left=value+'%';
   children[7].style.left=value+'%';children[11].style.left=value+'%';
   children[11].childNodes[1].innerHTML=this.value;"/>
-												<input type="range" tabindex="0" value="60" max="100" min="0" step="1"
+												<input type="range" tabindex="0" value="30" max="80" min="18" step="1"
 													   oninput="
   this.value=Math.max(this.value,this.parentNode.childNodes[3].value-(-1));
   var value=(100/(parseInt(this.max)-parseInt(this.min)))*parseInt(this.value)-(100/(parseInt(this.max)-parseInt(this.min)))*parseInt(this.min);
@@ -165,13 +165,13 @@
 													<span thumb style="left:30%;"></span>
 													<span thumb style="left:60%;"></span>
 													<div sign style="left:30%;">
-														<span id="value">30</span>
+														<span id="value">165</span>
 													</div>
 													<div sign style="left:60%;">
-														<span id="value">60</span>
+														<span id="value">175</span>
 													</div>
 												</div>
-												<input type="range" tabindex="0" value="30" max="100" min="0" step="1"
+												<input type="range" tabindex="0" value="165" max="250" min="60" step="1"
 													   oninput="
         this.value=Math.min(this.value,this.parentNode.childNodes[5].value-1);
         var value=(100/(parseInt(this.max)-parseInt(this.min)))*parseInt(this.value)-(100/(parseInt(this.max)-parseInt(this.min)))*parseInt(this.min);
@@ -179,8 +179,8 @@
         children[1].style.width=value+'%';
         children[5].style.left=value+'%';
         children[7].style.left=value+'%';children[11].style.left=value+'%';
-        children[11].childNodes[1].innerHTML=this.value;"/>
-												<input type="range" tabindex="0" value="60" max="100" min="0" step="1"
+        children[11].childNodes[1].innerHTML=this.value;" id="heightLeft"/>
+												<input type="range" tabindex="0" value="175" max="250" min="60" step="1"
 													   oninput="
         this.value=Math.max(this.value,this.parentNode.childNodes[3].value-(-1));
         var value=(100/(parseInt(this.max)-parseInt(this.min)))*parseInt(this.value)-(100/(parseInt(this.max)-parseInt(this.min)))*parseInt(this.min);
@@ -188,7 +188,7 @@
         children[3].style.width=(100-value)+'%';
         children[5].style.right=(100-value)+'%';
         children[9].style.left=value+'%';children[13].style.left=value+'%';
-        children[13].childNodes[1].innerHTML=this.value;"/>
+        children[13].childNodes[1].innerHTML=this.value;" id="heightRight"/>
 											</div>
 										</div>
 									</div>
@@ -499,180 +499,104 @@
 			</div>
 			<div class="col-lg-8 col-md-8 col-sm-12 col-12 mx-wdth-56">
 				<h2 class="ser-res-foun"><img src="<?php echo base_url(); ?>assets/images/serch.png" class="img-fluid">
-					&nbsp;<?php echo count($search_results_unique); ?> Search Results Found! &nbsp;<i
+					&nbsp;<div id="searchResultsCount"><?php echo count($search_results_unique); ?></div>
+					Search Results Found! &nbsp;<i
 							class="fas fa-level-down-alt"></i></h2>
+				<div id="searchResults">
 
-				<?php foreach ($search_results_unique
-							   as $result) { ?>
+					<?php foreach ($search_results_unique
+								   as $result) { ?>
 
-					<div class="search-res-wrap">
-						<div class="row">
-							<div class="col-lg-3 col-md-3 col-sm-3 col-12 pd-ser-ryt-0">
-								<img src="<?php echo base_url(); ?>assets/uploads/<?php echo $result->img_name; ?>"
-									 class="img-fluid ser-res-img">
-							</div>
-							<div class="col-lg-9 col-md-9 col-sm-9 col-12">
-								<div class="row">
-									<div class="col-lg-6 col-md-6 col-12 nme-wrp">
-										<h3 class="ser-res-name"><?php echo $result->first_name . ' ' . $result->last_name; ?> </h3>
-										&nbsp;| &nbsp;<span> <?php echo $result->web_id; ?></span>
-									</div>
-									<div class="col-lg-6 col-md-6 col-12 dis-flx">
-										<h3 class="prem-mem"><i
-													class="fas fa-crown comn-icon"></i>&nbsp; <?php echo $result->title; ?>
-											Member
-										</h3>
-										<a href="#"><h6 class="chaticon">Chat&nbsp; <i class="fas fa-comments"></i></h6>
-										</a>
-									</div>
+						<div class="search-res-wrap">
+							<div class="row">
+								<div class="col-lg-3 col-md-3 col-sm-3 col-12 pd-ser-ryt-0">
+									<img src="<?php echo base_url(); ?>assets/uploads/<?php echo $result->img_name; ?>"
+										 class="img-fluid ser-res-img">
 								</div>
-								<div class="row">
-									<div class="col-lg-12 col-md-12 col-sm-12 col-12 dis-flx"><i
-												class="fas fa-quote-left icn-qutes icn-qute"></i>
-										<!-- <i class="fas fa-quote-left "></i> -->
-										<p class="moree ser-res-para"><?php echo $result->aboutme; ?></span>
+								<div class="col-lg-9 col-md-9 col-sm-9 col-12">
+									<div class="row">
+										<div class="col-lg-6 col-md-6 col-12 nme-wrp">
+											<h3 class="ser-res-name"><?php echo $result->first_name . ' ' . $result->last_name; ?> </h3>
+											&nbsp;| &nbsp;<span> <?php echo $result->web_id; ?></span>
+										</div>
+										<div class="col-lg-6 col-md-6 col-12 dis-flx">
+											<h3 class="prem-mem"><i
+														class="fas fa-crown comn-icon"></i>&nbsp; <?php echo $result->title; ?>
+												Member
+											</h3>
+											<a href="#"><h6 class="chaticon">Chat&nbsp; <i class="fas fa-comments"></i>
+												</h6>
+											</a>
+										</div>
 									</div>
-								</div>
-								<hr>
-								<div class="row rw-bordr">
-									<div class="col-lg-6 col-md-6 col-sm-6 col-12">
-										<h6 class="ser-res-details"><i class="far fa-user-circle icn-res"></i>&nbsp; 27
-											Yrs
-											| <?php echo $result->height; ?>cm-5 ft 2 in</h6>
+									<div class="row">
+										<div class="col-lg-12 col-md-12 col-sm-12 col-12 dis-flx"><i
+													class="fas fa-quote-left icn-qutes icn-qute"></i>
+											<!-- <i class="fas fa-quote-left "></i> -->
+											<p class="moree ser-res-para"><?php echo $result->aboutme; ?></span>
+										</div>
 									</div>
-									<div class="col-lg-6 col-md-6 col-sm-6 col-12">
-										<h6 class="ser-res-details"><i
-													class="fas fa-map-marker-alt icn-res loct-ser-res"></i>&nbsp;
-											<?php echo $result->p_city . ' ' . $result->state . '' . $result->name; ?>
-										</h6>
+									<hr>
+									<div class="row rw-bordr">
+										<div class="col-lg-6 col-md-6 col-sm-6 col-12">
+											<h6 class="ser-res-details"><i class="far fa-user-circle icn-res"></i>&nbsp;
+												27
+												Yrs
+												| <?php echo $result->height; ?>cm-5 ft 2 in</h6>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-6 col-12">
+											<h6 class="ser-res-details"><i
+														class="fas fa-map-marker-alt icn-res loct-ser-res"></i>&nbsp;
+												<?php echo $result->p_city . ' ' . $result->state . '' . $result->name; ?>
+											</h6>
+										</div>
 									</div>
-								</div>
-								<hr>
-								<div class="row rw-bordr">
-									<div class="col-lg-6 col-md-6 col-sm-6 col-12">
-										<h6 class="ser-res-details"><i class="fas fa-book-open icn-res"
-																	   style="font-size: 11px;"></i>&nbsp;
-											<?php echo $result->religion; ?></h6>
+									<hr>
+									<div class="row rw-bordr">
+										<div class="col-lg-6 col-md-6 col-sm-6 col-12">
+											<h6 class="ser-res-details"><i class="fas fa-book-open icn-res"
+																		   style="font-size: 11px;"></i>&nbsp;
+												<?php echo $result->religion; ?></h6>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-6 col-12">
+											<h6 class="ser-res-details"><i class="fab fa-fort-awesome-alt icn-res"></i>&nbsp;
+												<?php echo $result->cast; ?></h6>
+										</div>
 									</div>
-									<div class="col-lg-6 col-md-6 col-sm-6 col-12">
-										<h6 class="ser-res-details"><i class="fab fa-fort-awesome-alt icn-res"></i>&nbsp;
-											<?php echo $result->cast; ?></h6>
+									<hr>
+									<div class="row rw-bordr">
+										<div class="col-lg-6 col-md-6 col-sm-6 col-12">
+											<h6 class="ser-res-details"><i class="fas fa-graduation-cap icn-res"></i>&nbsp;
+												<?php echo $result->education; ?></h6>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-6 col-12">
+											<h6 class="ser-res-details"><i class="fas fa-suitcase icn-res"></i>&nbsp;
+												<?php echo $result->job_title; ?></h6>
+										</div>
 									</div>
-								</div>
-								<hr>
-								<div class="row rw-bordr">
-									<div class="col-lg-6 col-md-6 col-sm-6 col-12">
-										<h6 class="ser-res-details"><i class="fas fa-graduation-cap icn-res"></i>&nbsp;
-											<?php echo $result->education; ?></h6>
-									</div>
-									<div class="col-lg-6 col-md-6 col-sm-6 col-12">
-										<h6 class="ser-res-details"><i class="fas fa-suitcase icn-res"></i>&nbsp;
-											<?php echo $result->job_title; ?></h6>
-									</div>
-								</div>
-								<hr>
-								<div class="row det-btn-rw">
-									<div class="col-lg-3 col-md-3 col-6 brdr-btn">
-										<a href="#" class="det-res-btn"><i class="fas fa-eye"></i>&nbsp;View Profile</a>
-									</div>
-									<div class="col-lg-3 col-md-3 col-6 brdr-btn">
-										<a href="#" class="det-res-btn"><i class="fas fa-heart"></i>&nbsp;Intrest
-											Send</a>
-									</div>
-									<div class="col-lg-3 col-md-3 col-6 brdr-btn">
-										<a href="#" class="det-res-btn"><i class="fas fa-check"></i>&nbsp;Shortlist</a>
-									</div>
-									<div class="col-lg-3 col-md-3 col-6 brdr-btn">
-										<a href="#" class="det-res-btn"><i
-													class="fas fa-mobile-alt"></i>&nbsp;Contact</a>
+									<hr>
+									<div class="row det-btn-rw">
+										<div class="col-lg-3 col-md-3 col-6 brdr-btn">
+											<a href="#" class="det-res-btn"><i class="fas fa-eye"></i>&nbsp;View Profile</a>
+										</div>
+										<div class="col-lg-3 col-md-3 col-6 brdr-btn">
+											<a href="#" class="det-res-btn"><i class="fas fa-heart"></i>&nbsp;Intrest
+												Send</a>
+										</div>
+										<div class="col-lg-3 col-md-3 col-6 brdr-btn">
+											<a href="#" class="det-res-btn"><i class="fas fa-check"></i>&nbsp;Shortlist</a>
+										</div>
+										<div class="col-lg-3 col-md-3 col-6 brdr-btn">
+											<a href="#" class="det-res-btn"><i
+														class="fas fa-mobile-alt"></i>&nbsp;Contact</a>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
 
-				<?php } ?>
-
-				<!--                <div class="search-res-wrap">-->
-				<!--                    <div class="row">-->
-				<!--                        <div class="col-lg-3 col-md-3 col-sm-3 col-12 pd-ser-ryt-0">-->
-				<!--                            <img src="-->
-				<?php //echo base_url(); ?><!--assets/images/img-1.jpg" class="img-fluid ser-res-img">-->
-				<!--                        </div>-->
-				<!--                        <div class="col-lg-9 col-md-9 col-sm-9 col-12">-->
-				<!--                            <div class="row">-->
-				<!--                                <div class="col-lg-6 col-md-6 col-12 nme-wrp">-->
-				<!--                                    <h3 class="ser-res-name">Irin Anna John </h3> &nbsp;| &nbsp;<span> MM-2527869</span>-->
-				<!--                                </div>-->
-				<!--                                <div class="col-lg-6 col-md-6 col-12 dis-flx">-->
-				<!--                                    <h3 class="prem-mem"><i class="fas fa-crown comn-icon"></i>&nbsp; Premium Member-->
-				<!--                                    </h3>-->
-				<!--                                    <a href="#"><h6 class="chaticon">Chat&nbsp; <i class="fas fa-comments"></i></h6></a>-->
-				<!--                                </div>-->
-				<!--                            </div>-->
-				<!--                            <div class="row">-->
-				<!--                                <div class="col-lg-12 col-md-12 col-sm-12 col-12 dis-flx"><i-->
-				<!--                                            class="fas fa-quote-left icn-qutes icn-qute"></i>-->
-				<!-- <i class="fas fa-quote-left "></i> -->
-				<!--                                    <p class="moree ser-res-para">Irin is My daughter and His Education Qualification is-->
-				<!--                                        Other Masters Degree in Engineering / Computers and His job Status is Working-->
-				<!--                                        Abroad - European.We are Residing @ THRISSUR District , Kerala</span>-->
-				<!--                                </div>-->
-				<!--                            </div>-->
-				<!--                            <hr>-->
-				<!--                            <div class="row rw-bordr">-->
-				<!--                                <div class="col-lg-6 col-md-6 col-sm-6 col-12">-->
-				<!--                                    <h6 class="ser-res-details"><i class="far fa-user-circle icn-res"></i>&nbsp; 27 Yrs-->
-				<!--                                        | 157cm-5 ft 2 in</h6>-->
-				<!--                                </div>-->
-				<!--                                <div class="col-lg-6 col-md-6 col-sm-6 col-12">-->
-				<!--                                    <h6 class="ser-res-details"><i-->
-				<!--                                                class="fas fa-map-marker-alt icn-res loct-ser-res"></i>&nbsp;-->
-				<!--                                        Eranakulam, Kerala, India</h6>-->
-				<!--                                </div>-->
-				<!--                            </div>-->
-				<!--                            <hr>-->
-				<!--                            <div class="row rw-bordr">-->
-				<!--                                <div class="col-lg-6 col-md-6 col-sm-6 col-12">-->
-				<!--                                    <h6 class="ser-res-details"><i class="fas fa-book-open icn-res"-->
-				<!--                                                                   style="font-size: 11px;"></i>&nbsp; Christian,-->
-				<!--                                        Catholic</h6>-->
-				<!--                                </div>-->
-				<!--                                <div class="col-lg-6 col-md-6 col-sm-6 col-12">-->
-				<!--                                    <h6 class="ser-res-details"><i class="fab fa-fort-awesome-alt icn-res"></i>&nbsp;-->
-				<!--                                        Syrian</h6>-->
-				<!--                                </div>-->
-				<!--                            </div>-->
-				<!--                            <hr>-->
-				<!--                            <div class="row rw-bordr">-->
-				<!--                                <div class="col-lg-6 col-md-6 col-sm-6 col-12">-->
-				<!--                                    <h6 class="ser-res-details"><i class="fas fa-graduation-cap icn-res"></i>&nbsp;-->
-				<!--                                        Btech</h6>-->
-				<!--                                </div>-->
-				<!--                                <div class="col-lg-6 col-md-6 col-sm-6 col-12">-->
-				<!--                                    <h6 class="ser-res-details"><i class="fas fa-suitcase icn-res"></i>&nbsp; Software-->
-				<!--                                        Developer</h6>-->
-				<!--                                </div>-->
-				<!--                            </div>-->
-				<!--                            <hr>-->
-				<!--                            <div class="row det-btn-rw">-->
-				<!--                                <div class="col-lg-3 col-md-3 col-6 brdr-btn">-->
-				<!--                                    <a href="#" class="det-res-btn"><i class="fas fa-eye"></i>&nbsp;View Profile</a>-->
-				<!--                                </div>-->
-				<!--                                <div class="col-lg-3 col-md-3 col-6 brdr-btn">-->
-				<!--                                    <a href="#" class="det-res-btn"><i class="fas fa-heart"></i>&nbsp;Intrest Send</a>-->
-				<!--                                </div>-->
-				<!--                                <div class="col-lg-3 col-md-3 col-6 brdr-btn">-->
-				<!--                                    <a href="#" class="det-res-btn"><i class="fas fa-check"></i>&nbsp;Shortlist</a>-->
-				<!--                                </div>-->
-				<!--                                <div class="col-lg-3 col-md-3 col-6 brdr-btn">-->
-				<!--                                    <a href="#" class="det-res-btn"><i class="fas fa-mobile-alt"></i>&nbsp;Contact</a>-->
-				<!--                                </div>-->
-				<!--                            </div>-->
-				<!--                        </div>-->
-				<!--                    </div>-->
-				<!--                </div>-->
-
+					<?php } ?>
+				</div>
 				<nav aria-label="..." class="paginatn">
 					<ul class="pagination pagination-lg">
 						<li class="page-item"><a class="page-link" href="#" aria-label="Previous">&laquo;</a></li>
@@ -696,6 +620,30 @@
 				</div>
 			</div>
 </section>
+<script>
+	const heightRightSlider = document.getElementById("heightRight");
+	const heightLeftSlider = document.getElementById("heightLeft");
+	heightRightSlider.onchange = onHeightSliderChanged;
+	heightLeftSlider.onchange = onHeightSliderChanged;
 
+	function onHeightSliderChanged() {
+		const minimumHeight = heightLeftSlider.value;
+		// alert(minimumHeight + maximumHeight);
+		$.ajax({
+			url: "<?php echo site_url('PreferredMatch/getHeightMatches');?>",
+			method: "POST",
+			data: {minHeight: minimumHeight, maxHeight: maximumHeight},
+			success: function (filteredResults) {
 
+				console.log("Filter Results : " + filteredResults);
+				if (filteredResults.status === 1) {
 
+					document.getElementById("searchResultsCount").innerText = "0";
+
+				} else if (filteredResults.status === 0) {
+
+				}
+			}
+		});
+	}
+</script>
