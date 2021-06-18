@@ -501,7 +501,7 @@
 				<h2 class="ser-res-foun"><img src="<?php echo base_url(); ?>assets/images/serch.png" class="img-fluid">
 					&nbsp;<div id="searchResultsCount"><?php echo count($search_results_unique); ?></div>
 					Search Results Found! &nbsp;<i
-							class="fas fa-level-down-alt"></i></h2>
+						class="fas fa-level-down-alt"></i></h2>
 				<div id="searchResults">
 
 					<?php foreach ($search_results_unique
@@ -521,7 +521,7 @@
 										</div>
 										<div class="col-lg-6 col-md-6 col-12 dis-flx">
 											<h3 class="prem-mem"><i
-														class="fas fa-crown comn-icon"></i>&nbsp; <?php echo $result->title; ?>
+													class="fas fa-crown comn-icon"></i>&nbsp; <?php echo $result->title; ?>
 												Member
 											</h3>
 											<a href="#"><h6 class="chaticon">Chat&nbsp; <i class="fas fa-comments"></i>
@@ -531,7 +531,7 @@
 									</div>
 									<div class="row">
 										<div class="col-lg-12 col-md-12 col-sm-12 col-12 dis-flx"><i
-													class="fas fa-quote-left icn-qutes icn-qute"></i>
+												class="fas fa-quote-left icn-qutes icn-qute"></i>
 											<!-- <i class="fas fa-quote-left "></i> -->
 											<p class="moree ser-res-para"><?php echo $result->aboutme; ?></span>
 										</div>
@@ -546,7 +546,7 @@
 										</div>
 										<div class="col-lg-6 col-md-6 col-sm-6 col-12">
 											<h6 class="ser-res-details"><i
-														class="fas fa-map-marker-alt icn-res loct-ser-res"></i>&nbsp;
+													class="fas fa-map-marker-alt icn-res loct-ser-res"></i>&nbsp;
 												<?php echo $result->p_city . ' ' . $result->state . '' . $result->name; ?>
 											</h6>
 										</div>
@@ -588,7 +588,7 @@
 										</div>
 										<div class="col-lg-3 col-md-3 col-6 brdr-btn">
 											<a href="#" class="det-res-btn"><i
-														class="fas fa-mobile-alt"></i>&nbsp;Contact</a>
+													class="fas fa-mobile-alt"></i>&nbsp;Contact</a>
 										</div>
 									</div>
 								</div>
@@ -627,23 +627,156 @@
 	heightLeftSlider.onchange = onHeightSliderChanged;
 
 	function onHeightSliderChanged() {
+
 		const minimumHeight = heightLeftSlider.value;
-		// alert(minimumHeight + maximumHeight);
+		const maximumHeight = heightRightSlider.value;
+		console.log("Limits : " + minimumHeight + " " + maximumHeight);
+
 		$.ajax({
-			url: "<?php echo site_url('PreferredMatch/getHeightMatches');?>",
+			url: "<?php echo site_url('PreferredMatch/getHeightMatchesFromRegisteredUsers');?>",
 			method: "POST",
 			data: {minHeight: minimumHeight, maxHeight: maximumHeight},
-			success: function (filteredResults) {
+			success: function (filteredResultsJsonString) {
 
-				console.log("Filter Results : " + filteredResults);
-				if (filteredResults.status === 1) {
+				filteredResultsJsonString = filteredResultsJsonString.replace(/null/g, "\"\"");
+				console.log("Filter Results JSON String: " + filteredResultsJsonString);
 
-					document.getElementById("searchResultsCount").innerText = "0";
+				const filteredResultsJson = JSON.parse(filteredResultsJsonString)
+				console.log("Filter Status : " + filteredResultsJson.status);
 
-				} else if (filteredResults.status === 0) {
+				if (filteredResultsJson.status == 1) {
 
+					document.getElementById("searchResultsCount").innerHTML = "0";
+					document.getElementById("searchResults").innerHTML = "";
+
+				} else if (filteredResultsJson.status == 0) {
+
+					const filteredData = filteredResultsJson.data;
+					document.getElementById("searchResultsCount").innerHTML = Object.keys(filteredData).length.toString();
+					console.log("Filter Data : " + filteredData);
+					let html = "";
+					for (let i in filteredData) {
+
+						console.log("HTML : " + html);
+
+						console.log(filteredData[i].toString());
+						html = html +
+							"<div class=\"search-res-wrap\">" +
+							"<div class=\"row\">" +
+							"<div class=\"col-lg-3 col-md-3 col-sm-3 col-12 pd-ser-ryt-0\">" +
+							"<img src=\"<?php echo base_url(); ?>assets/uploads/" + filteredData[i].img_name + "\"class=\"img-fluid ser-res-img\">" +
+							"</div>" +
+
+							'<div class="col-lg-9 col-md-9 col-sm-9 col-12">' +
+							'<div class="row">' +
+							'<div class="col-lg-6 col-md-6 col-12 nme-wrp">' +
+							'<h3 class="ser-res-name">' + filteredData[i].first_name + ' ' + filteredData[i].last_name + '</h3>' +
+							'&nbsp;| &nbsp;<span>' + filteredData[i].web_id + '</span>' +
+							'</div>' +
+							'<div class="col-lg-6 col-md-6 col-12 dis-flx">' +
+							'<h3 class="prem-mem"><i class="fas fa-crown comn-icon"></i>&nbsp; ' + filteredData[i].title + ' Member' +
+							'</h3>' +
+							'<a href="#"><h6 class="chaticon">Chat&nbsp; <i class="fas fa-comments"></i>' +
+							'</h6>' +
+							'</a>' +
+							'</div>' +
+							'</div>' +
+							'<div class="row">' +
+							'<div class="col-lg-12 col-md-12 col-sm-12 col-12 dis-flx">' +
+							'<i class="fas fa-quote-left icn-qutes icn-qute"></i>' +
+							'<p class="moree ser-res-para">' + filteredData[i].aboutme + '</span>' +
+							'</div>' +
+							'</div>' +
+							'<hr>' +
+							'<div class="row rw-bordr">' +
+							'<div class="col-lg-6 col-md-6 col-sm-6 col-12">' +
+							'<h6 class="ser-res-details"><i class="far fa-user-circle icn-res"></i>&nbsp;' +
+							+getAgeFromDob(filteredData[i].dob) +
+							' Yrs' +
+							' | ' + filteredData[i].height + 'cm - ' + centimeterToFeet(filteredData[i].height) + '</h6>' +
+							'</div>' +
+							'<div class="col-lg-6 col-md-6 col-sm-6 col-12">' +
+							'<h6 class="ser-res-details">' +
+							'<i class="fas fa-map-marker-alt icn-res loct-ser-res"></i>&nbsp;' +
+							filteredData[i].p_city + ', ' + filteredData[i].state + ', ' + filteredData[i].name +
+							'</h6>' +
+							'</div>' +
+							'</div>' +
+							'<hr>' +
+							'<div class="row rw-bordr">' +
+							'<div class="col-lg-6 col-md-6 col-sm-6 col-12">' +
+							'<h6 class="ser-res-details"><i class="fas fa-book-open icn-res"' +
+							'style="font-size: 11px;"></i>&nbsp;' +
+							filteredData[i].religion + '</h6>' +
+							'</div>' +
+							'<div class="col-lg-6 col-md-6 col-sm-6 col-12">' +
+							'<h6 class="ser-res-details"><i class="fab fa-fort-awesome-alt icn-res"></i>&nbsp;' +
+							filteredData[i].cast + '</h6>' +
+							'</div>' +
+							'</div>' +
+							'<hr>' +
+							'<div class="row rw-bordr">' +
+							'<div class="col-lg-6 col-md-6 col-sm-6 col-12">' +
+							'<h6 class="ser-res-details"><i class="fas fa-graduation-cap icn-res"></i>&nbsp;' +
+							filteredData[i].education + '</h6>' +
+							'</div>' +
+							'<div class="col-lg-6 col-md-6 col-sm-6 col-12">' +
+							'<h6 class="ser-res-details"><i class="fas fa-suitcase icn-res"></i>&nbsp;' +
+							filteredData[i].job_title + '</h6>' +
+							'</div>' +
+							'</div>' +
+							'<hr>' +
+							'<div class="row det-btn-rw">' +
+							'<div class="col-lg-3 col-md-3 col-6 brdr-btn">' +
+							'<a href="#" class="det-res-btn"><i class="fas fa-eye"></i>&nbsp;View Profile</a>' +
+							'</div>' +
+							'<div class="col-lg-3 col-md-3 col-6 brdr-btn">' +
+							'<a href="#" class="det-res-btn"><i class="fas fa-heart"></i>&nbsp;Intrest Send</a>' +
+							'</div>' +
+							'<div class="col-lg-3 col-md-3 col-6 brdr-btn">' +
+							'<a href="#" class="det-res-btn"><i class="fas fa-check"></i>&nbsp;Shortlist</a>' +
+							'</div>' +
+							'<div class="col-lg-3 col-md-3 col-6 brdr-btn">' +
+							'<a href="#" class="det-res-btn">' +
+							'<i class="fas fa-mobile-alt"></i>&nbsp;Contact</a>' +
+							'</div>' +
+							'</div>' +
+							'</div>' +
+							"</div>" +
+							"</div>";
+					}
+					document.getElementById("searchResults").innerHTML = html;
 				}
 			}
 		});
+
+		function getAgeFromDob(date) {
+
+			const dob = new Date(date);
+			console.log(dob);
+
+			//calculate month difference from current date in time
+			const month_diff = Date.now() - dob.getTime();
+
+			//convert the calculated difference in date format
+			const age_dt = new Date(month_diff);
+
+			//extract year from date
+			const year = age_dt.getUTCFullYear();
+
+			//now calculate the age of the user
+			const age = Math.abs(year - 1970);
+
+			console.log(age);
+			return age;
+		}
+
+		function centimeterToFeet(n) {
+
+			var realFeet = ((n * 0.393700) / 12);
+			var feet = Math.floor(realFeet);
+			var inches = Math.round((realFeet - feet) * 12);
+			return feet + " ft " + inches + ' in';
+		}
 	}
 </script>

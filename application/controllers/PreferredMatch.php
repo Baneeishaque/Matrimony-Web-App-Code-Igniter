@@ -65,11 +65,26 @@ class PreferredMatch extends CI_Controller
 		}
 		if (count($heightenResults) > 0) {
 
-			echo json_encode(array('status' => 0, 'data' => $heightenResults));
+			echo json_encode(array('status' => "0", 'data' => $heightenResults));
 
 		} else {
 
-			echo json_encode(array('status' => 1));
+			echo json_encode(array('status' => "1"));
+		}
+	}
+
+	public function getHeightMatchesFromRegisteredUsers()
+	{
+
+		$registeredUsers = $this->Register_Model->getRegisteredUsersWithOutUserIdAndHeightRanges($this->getUserId(), $this->input->post('minHeight'), $this->input->post('maxHeight'));
+
+		if (count($registeredUsers) > 0) {
+
+			echo json_encode(array('status' => "0", 'data' => $registeredUsers));
+
+		} else {
+
+			echo json_encode(array('status' => "1"));
 		}
 	}
 

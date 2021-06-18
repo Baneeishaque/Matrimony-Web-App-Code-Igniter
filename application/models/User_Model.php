@@ -8,7 +8,6 @@ class User_Model extends CI_Model
 		$this->load->database();
 	}
 
-
 	public function insert_package($data)
 	{
 		if ($this->db->insert("customer_package", $data)) {
@@ -216,9 +215,7 @@ class User_Model extends CI_Model
       smok_habbi.habbit_type as s_habbi, 
       drink_habbi.habbit_type as d_habbi,
 
-      register.language_known,languages_known.language, register.hobbies,hobbies.hobby, register.interests,interest.interest, register.eating_id,eating_habbit.eating_habbit, blog, facebook, othe_social
-
-      ');
+      register.language_known,languages_known.language, register.hobbies,hobbies.hobby, register.interests,interest.interest, register.eating_id,eating_habbit.eating_habbit, blog, facebook, othe_social');
 
 		$this->db->from('register');
 		$this->db->join('complexion', 'register.complexion_id=complexion.complexion_id', 'left');
@@ -228,7 +225,6 @@ class User_Model extends CI_Model
 		$this->db->join('hobbies', 'register.hobbies=hobbies.hobby_id', 'left');
 		$this->db->join('interest', 'register.interests=interest.interest_id', 'left');
 		$this->db->join('eating_habbit', 'register.eating_id = eating_habbit.eating_id', 'left');
-
 
 		$this->db->where('register.web_id', $id);
 
@@ -267,7 +263,6 @@ class User_Model extends CI_Model
 
       GROUP_CONCAT(DISTINCT edu_category.edu_category) as edu_category, partner_prefferences.edu_cat,
       GROUP_CONCAT(DISTINCT job_category.job_cat) as job_category, partner_prefferences.job_cat,
-
 
       GROUP_CONCAT(DISTINCT job.job_title) as job_title,country.name,
       states.state,districts.id,
@@ -308,8 +303,4 @@ class User_Model extends CI_Model
 		$query = $this->db->get();
 		return $query->result();
 	}
-
-
 }
-
-?>
