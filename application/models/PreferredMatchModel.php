@@ -20,7 +20,7 @@ class PreferredMatchModel extends CI_Model
 		return $query->result();
 	}
 
-	function getMatchesLevel2($userId, $userHeightFrom, $userHeightTo, $userMaritalStatusId, $userPhysicalStatusId, $userReligionId, $userCastId, $userJobTitleId, $userHighestEducationId, $userStateId, $userDistrictId, $userIncomeId, $userComplexionId, $userBodyTypeId, $userFamilyStatusId, $userCountryId)
+	function getMatchesLevel2($ageFrom, $ageTo, $userId, $userHeightFrom, $userHeightTo, $userMaritalStatusId, $userPhysicalStatusId, $userReligionId, $userCastId, $userJobTitleId, $userHighestEducationId, $userStateId, $userDistrictId, $userIncomeId, $userComplexionId, $userBodyTypeId, $userFamilyStatusId, $userCountryId)
 	{
 		$sql = "SELECT
     `register`.`reg_id`,
@@ -222,7 +222,8 @@ FROM
      `customer_package`,
      `packages`
 WHERE
-    `register`.`height` BETWEEN '$userHeightFrom' AND '$userHeightTo' 
+          DATE_FORMAT(FROM_DAYS(DATEDIFF(now(),`register`.`dob`)), '%Y')+0 BETWEEN '$ageFrom' AND '$ageTo'
+	AND `register`.`height` BETWEEN '$userHeightFrom' AND '$userHeightTo' 
   AND `register`.`marital_status_id` IN ('" . str_replace_last(",", "", $userMaritalStatusId) . "') 
   AND `register`.`physical_status_id` IN ('" . str_replace_last(",", "", $userPhysicalStatusId) . "') 
   AND `register`.`religion_id` = '$userReligionId' 
@@ -262,7 +263,7 @@ DESC";
 		return $query->result();
 	}
 
-	function getMatchesLevel3($userId, $userHeightFrom, $userHeightTo, $userMaritalStatusId, $userPhysicalStatusId, $userReligionId, $userCastId, $userJobTitleId, $userHighestEducationId, $userStateId, $userDistrictId, $userIncomeId, $userComplexionId, $userBodyTypeId, $userFamilyStatusId)
+	function getMatchesLevel3($ageFrom, $ageTo, $userId, $userHeightFrom, $userHeightTo, $userMaritalStatusId, $userPhysicalStatusId, $userReligionId, $userCastId, $userJobTitleId, $userHighestEducationId, $userStateId, $userDistrictId, $userIncomeId, $userComplexionId, $userBodyTypeId, $userFamilyStatusId)
 	{
 		$sql = "SELECT
     `register`.`reg_id`,
@@ -464,7 +465,8 @@ FROM
      `customer_package`,
      `packages`
 WHERE
-    `register`.`height` BETWEEN '$userHeightFrom' AND '$userHeightTo' AND `register`.`marital_status_id` IN ('" . str_replace_last(",", "", $userMaritalStatusId) . "') AND `register`.`physical_status_id` IN ('" . str_replace_last(",", "", $userPhysicalStatusId) . "') AND `register`.`religion_id` = '$userReligionId' AND `register`.`cast_id` IN ('" . str_replace_last(",", "", $userCastId) . "') AND `register`.`jobtitle_id` IN ('" . str_replace_last(",", "", $userJobTitleId) . "') AND `register`.`highest_education_id` IN ('" . str_replace_last(",", "", $userHighestEducationId) . "') AND `register`.`p_state_id` = '$userStateId' AND `register`.`p_district_id` IN ('" . str_replace_last(",", "", $userDistrictId) . "') AND `register`.`income_id` = '$userIncomeId' AND `register`.`complexion_id` IN ('" . str_replace_last(",", "", $userComplexionId) . "') AND `register`.`body_type_id` IN ('" . str_replace_last(",", "", $userBodyTypeId) . "') AND `register`.`family_status_id` IN ('" . str_replace_last(",", "", $userFamilyStatusId) . "') AND `register`.`web_id` = `users`.`id` AND `register`.`p_state_id` = `states`.`id` AND `register`.`religion_id` = `religion`.`religion_id` AND `register`.`p_country_id` = `country`.`id` AND `register`.`income_id` = `income`.`income_id` AND `register`.`marital_status_id` = `marital_status`.`marital_status_id` AND `register`.`physical_status_id` = `physical_status`.`physical_status_id` AND `register`.`jobtitle_id` = `job`.`job_id` AND `register`.`highest_education_id` = `education`.`education_id` AND `register`.`p_district_id` = `districts`.`id` AND `register`.`complexion_id` = `complexion`.`complexion_id` AND `register`.`body_type_id` = `body_type`.`body_type_id` AND `register`.`family_status_id` = `family_status`.`family_status_id` AND `register`.`cast_id` = `cast`.`cast_id` AND `documents`.`web_id` = `users`.`id` AND `documents`.`type`= 'profile_photo' AND `customer_package`.`web_id` = `users`.`id` AND `customer_package`.`sub_id` = `packages`.`id` AND `register`.`web_id` != '$userId'  
+          DATE_FORMAT(FROM_DAYS(DATEDIFF(now(),`register`.`dob`)), '%Y')+0 BETWEEN '$ageFrom' AND '$ageTo'
+	AND `register`.`height` BETWEEN '$userHeightFrom' AND '$userHeightTo' AND `register`.`marital_status_id` IN ('" . str_replace_last(",", "", $userMaritalStatusId) . "') AND `register`.`physical_status_id` IN ('" . str_replace_last(",", "", $userPhysicalStatusId) . "') AND `register`.`religion_id` = '$userReligionId' AND `register`.`cast_id` IN ('" . str_replace_last(",", "", $userCastId) . "') AND `register`.`jobtitle_id` IN ('" . str_replace_last(",", "", $userJobTitleId) . "') AND `register`.`highest_education_id` IN ('" . str_replace_last(",", "", $userHighestEducationId) . "') AND `register`.`p_state_id` = '$userStateId' AND `register`.`p_district_id` IN ('" . str_replace_last(",", "", $userDistrictId) . "') AND `register`.`income_id` = '$userIncomeId' AND `register`.`complexion_id` IN ('" . str_replace_last(",", "", $userComplexionId) . "') AND `register`.`body_type_id` IN ('" . str_replace_last(",", "", $userBodyTypeId) . "') AND `register`.`family_status_id` IN ('" . str_replace_last(",", "", $userFamilyStatusId) . "') AND `register`.`web_id` = `users`.`id` AND `register`.`p_state_id` = `states`.`id` AND `register`.`religion_id` = `religion`.`religion_id` AND `register`.`p_country_id` = `country`.`id` AND `register`.`income_id` = `income`.`income_id` AND `register`.`marital_status_id` = `marital_status`.`marital_status_id` AND `register`.`physical_status_id` = `physical_status`.`physical_status_id` AND `register`.`jobtitle_id` = `job`.`job_id` AND `register`.`highest_education_id` = `education`.`education_id` AND `register`.`p_district_id` = `districts`.`id` AND `register`.`complexion_id` = `complexion`.`complexion_id` AND `register`.`body_type_id` = `body_type`.`body_type_id` AND `register`.`family_status_id` = `family_status`.`family_status_id` AND `register`.`cast_id` = `cast`.`cast_id` AND `documents`.`web_id` = `users`.`id` AND `documents`.`type`= 'profile_photo' AND `customer_package`.`web_id` = `users`.`id` AND `customer_package`.`sub_id` = `packages`.`id` AND `register`.`web_id` != '$userId'  
 ORDER BY
     `users`.`created_on`
 DESC";
@@ -474,7 +476,7 @@ DESC";
 		return $query->result();
 	}
 
-	function getMatchesLevel4($userId, $userHeightFrom, $userHeightTo, $userMaritalStatusId, $userPhysicalStatusId, $userReligionId, $userCastId, $userJobTitleId, $userHighestEducationId, $userStateId, $userDistrictId, $userIncomeId, $userComplexionId, $userBodyTypeId)
+	function getMatchesLevel4($ageFrom, $ageTo, $userId, $userHeightFrom, $userHeightTo, $userMaritalStatusId, $userPhysicalStatusId, $userReligionId, $userCastId, $userJobTitleId, $userHighestEducationId, $userStateId, $userDistrictId, $userIncomeId, $userComplexionId, $userBodyTypeId)
 	{
 		$sql = "SELECT
     `register`.`reg_id`,
@@ -676,7 +678,8 @@ FROM
      `customer_package`,
      `packages`
 WHERE
-    `register`.`height` BETWEEN '$userHeightFrom' AND '$userHeightTo' AND `register`.`marital_status_id` IN ('" . str_replace_last(",", "", $userMaritalStatusId) . "') AND `register`.`physical_status_id` IN ('" . str_replace_last(",", "", $userPhysicalStatusId) . "') AND `register`.`religion_id` = '$userReligionId' AND `register`.`cast_id` IN ('" . str_replace_last(",", "", $userCastId) . "') AND `register`.`jobtitle_id` IN ('" . str_replace_last(",", "", $userJobTitleId) . "') AND `register`.`highest_education_id` IN ('" . str_replace_last(",", "", $userHighestEducationId) . "') AND `register`.`p_state_id` = '$userStateId' AND `register`.`p_district_id` IN ('" . str_replace_last(",", "", $userDistrictId) . "') AND `register`.`income_id` = '$userIncomeId' AND `register`.`complexion_id` IN ('" . str_replace_last(",", "", $userComplexionId) . "') AND `register`.`body_type_id` IN ('" . str_replace_last(",", "", $userBodyTypeId) . "') AND `register`.`web_id` = `users`.`id` AND `register`.`p_state_id` = `states`.`id` AND `register`.`religion_id` = `religion`.`religion_id` AND `register`.`p_country_id` = `country`.`id` AND `register`.`income_id` = `income`.`income_id` AND `register`.`marital_status_id` = `marital_status`.`marital_status_id` AND `register`.`physical_status_id` = `physical_status`.`physical_status_id` AND `register`.`jobtitle_id` = `job`.`job_id` AND `register`.`highest_education_id` = `education`.`education_id`  AND `register`.`p_district_id` = `districts`.`id` AND `register`.`complexion_id` = `complexion`.`complexion_id` AND `register`.`body_type_id` = `body_type`.`body_type_id` AND `register`.`family_status_id` = `family_status`.`family_status_id` AND `register`.`cast_id` = `cast`.`cast_id` AND `documents`.`web_id` = `users`.`id` AND `documents`.`type`= 'profile_photo' AND `customer_package`.`web_id` = `users`.`id` AND `customer_package`.`sub_id` = `packages`.`id` AND `register`.`web_id` != '$userId'  
+          DATE_FORMAT(FROM_DAYS(DATEDIFF(now(),`register`.`dob`)), '%Y')+0 BETWEEN '$ageFrom' AND '$ageTo'
+	AND `register`.`height` BETWEEN '$userHeightFrom' AND '$userHeightTo' AND `register`.`marital_status_id` IN ('" . str_replace_last(",", "", $userMaritalStatusId) . "') AND `register`.`physical_status_id` IN ('" . str_replace_last(",", "", $userPhysicalStatusId) . "') AND `register`.`religion_id` = '$userReligionId' AND `register`.`cast_id` IN ('" . str_replace_last(",", "", $userCastId) . "') AND `register`.`jobtitle_id` IN ('" . str_replace_last(",", "", $userJobTitleId) . "') AND `register`.`highest_education_id` IN ('" . str_replace_last(",", "", $userHighestEducationId) . "') AND `register`.`p_state_id` = '$userStateId' AND `register`.`p_district_id` IN ('" . str_replace_last(",", "", $userDistrictId) . "') AND `register`.`income_id` = '$userIncomeId' AND `register`.`complexion_id` IN ('" . str_replace_last(",", "", $userComplexionId) . "') AND `register`.`body_type_id` IN ('" . str_replace_last(",", "", $userBodyTypeId) . "') AND `register`.`web_id` = `users`.`id` AND `register`.`p_state_id` = `states`.`id` AND `register`.`religion_id` = `religion`.`religion_id` AND `register`.`p_country_id` = `country`.`id` AND `register`.`income_id` = `income`.`income_id` AND `register`.`marital_status_id` = `marital_status`.`marital_status_id` AND `register`.`physical_status_id` = `physical_status`.`physical_status_id` AND `register`.`jobtitle_id` = `job`.`job_id` AND `register`.`highest_education_id` = `education`.`education_id`  AND `register`.`p_district_id` = `districts`.`id` AND `register`.`complexion_id` = `complexion`.`complexion_id` AND `register`.`body_type_id` = `body_type`.`body_type_id` AND `register`.`family_status_id` = `family_status`.`family_status_id` AND `register`.`cast_id` = `cast`.`cast_id` AND `documents`.`web_id` = `users`.`id` AND `documents`.`type`= 'profile_photo' AND `customer_package`.`web_id` = `users`.`id` AND `customer_package`.`sub_id` = `packages`.`id` AND `register`.`web_id` != '$userId'  
 ORDER BY
     `users`.`created_on`
 DESC";
@@ -684,7 +687,7 @@ DESC";
 		return $query->result();
 	}
 
-	function getMatchesLevel5($userId, $userHeightFrom, $userHeightTo, $userMaritalStatusId, $userPhysicalStatusId, $userReligionId, $userCastId, $userJobTitleId, $userHighestEducationId, $userStateId, $userDistrictId, $userIncomeId, $userComplexionId)
+	function getMatchesLevel5($ageFrom, $ageTo, $userId, $userHeightFrom, $userHeightTo, $userMaritalStatusId, $userPhysicalStatusId, $userReligionId, $userCastId, $userJobTitleId, $userHighestEducationId, $userStateId, $userDistrictId, $userIncomeId, $userComplexionId)
 	{
 		$sql = "SELECT
     `register`.`reg_id`,
@@ -886,7 +889,8 @@ FROM
      `customer_package`,
      `packages`
 WHERE
-    `register`.`height` BETWEEN '$userHeightFrom' AND '$userHeightTo' AND `register`.`marital_status_id` IN ('" . str_replace_last(",", "", $userMaritalStatusId) . "') AND `register`.`physical_status_id` IN ('" . str_replace_last(",", "", $userPhysicalStatusId) . "') AND `register`.`religion_id` = '$userReligionId' AND `register`.`cast_id` IN ('" . str_replace_last(",", "", $userCastId) . "') AND `register`.`jobtitle_id` IN ('" . str_replace_last(",", "", $userJobTitleId) . "') AND `register`.`highest_education_id` IN ('" . str_replace_last(",", "", $userHighestEducationId) . "') AND `register`.`p_state_id` = '$userStateId' AND `register`.`p_district_id` IN ('" . str_replace_last(",", "", $userDistrictId) . "') AND `register`.`income_id` = '$userIncomeId' AND `register`.`complexion_id` IN ('" . str_replace_last(",", "", $userComplexionId) . "')AND `register`.`web_id` = `users`.`id` AND `register`.`p_state_id` = `states`.`id` AND `register`.`religion_id` = `religion`.`religion_id` AND `register`.`p_country_id` = `country`.`id` AND `register`.`income_id` = `income`.`income_id` AND `register`.`marital_status_id` = `marital_status`.`marital_status_id` AND `register`.`physical_status_id` = `physical_status`.`physical_status_id` AND `register`.`jobtitle_id` = `job`.`job_id` AND `register`.`highest_education_id` = `education`.`education_id`  AND `register`.`p_district_id` = `districts`.`id` AND `register`.`complexion_id` = `complexion`.`complexion_id` AND `register`.`body_type_id` = `body_type`.`body_type_id` AND `register`.`family_status_id` = `family_status`.`family_status_id` AND `register`.`cast_id` = `cast`.`cast_id` AND `documents`.`web_id` = `users`.`id` AND `documents`.`type`= 'profile_photo' AND `customer_package`.`web_id` = `users`.`id` AND `customer_package`.`sub_id` = `packages`.`id` AND `register`.`web_id` != '$userId'  
+          DATE_FORMAT(FROM_DAYS(DATEDIFF(now(),`register`.`dob`)), '%Y')+0 BETWEEN '$ageFrom' AND '$ageTo'
+	AND `register`.`height` BETWEEN '$userHeightFrom' AND '$userHeightTo' AND `register`.`marital_status_id` IN ('" . str_replace_last(",", "", $userMaritalStatusId) . "') AND `register`.`physical_status_id` IN ('" . str_replace_last(",", "", $userPhysicalStatusId) . "') AND `register`.`religion_id` = '$userReligionId' AND `register`.`cast_id` IN ('" . str_replace_last(",", "", $userCastId) . "') AND `register`.`jobtitle_id` IN ('" . str_replace_last(",", "", $userJobTitleId) . "') AND `register`.`highest_education_id` IN ('" . str_replace_last(",", "", $userHighestEducationId) . "') AND `register`.`p_state_id` = '$userStateId' AND `register`.`p_district_id` IN ('" . str_replace_last(",", "", $userDistrictId) . "') AND `register`.`income_id` = '$userIncomeId' AND `register`.`complexion_id` IN ('" . str_replace_last(",", "", $userComplexionId) . "')AND `register`.`web_id` = `users`.`id` AND `register`.`p_state_id` = `states`.`id` AND `register`.`religion_id` = `religion`.`religion_id` AND `register`.`p_country_id` = `country`.`id` AND `register`.`income_id` = `income`.`income_id` AND `register`.`marital_status_id` = `marital_status`.`marital_status_id` AND `register`.`physical_status_id` = `physical_status`.`physical_status_id` AND `register`.`jobtitle_id` = `job`.`job_id` AND `register`.`highest_education_id` = `education`.`education_id`  AND `register`.`p_district_id` = `districts`.`id` AND `register`.`complexion_id` = `complexion`.`complexion_id` AND `register`.`body_type_id` = `body_type`.`body_type_id` AND `register`.`family_status_id` = `family_status`.`family_status_id` AND `register`.`cast_id` = `cast`.`cast_id` AND `documents`.`web_id` = `users`.`id` AND `documents`.`type`= 'profile_photo' AND `customer_package`.`web_id` = `users`.`id` AND `customer_package`.`sub_id` = `packages`.`id` AND `register`.`web_id` != '$userId'  
 ORDER BY
     `users`.`created_on`
 DESC";
@@ -894,7 +898,7 @@ DESC";
 		return $query->result();
 	}
 
-	function getMatchesLevel6($userId, $userHeightFrom, $userHeightTo, $userMaritalStatusId, $userPhysicalStatusId, $userReligionId, $userCastId, $userJobTitleId, $userHighestEducationId, $userStateId, $userDistrictId, $userIncomeId)
+	function getMatchesLevel6($ageFrom, $ageTo, $userId, $userHeightFrom, $userHeightTo, $userMaritalStatusId, $userPhysicalStatusId, $userReligionId, $userCastId, $userJobTitleId, $userHighestEducationId, $userStateId, $userDistrictId, $userIncomeId)
 	{
 		$sql = "SELECT
     `register`.`reg_id`,
@@ -1096,7 +1100,8 @@ FROM
      `customer_package`,
      `packages`
 WHERE
-    `register`.`height` BETWEEN '$userHeightFrom' AND '$userHeightTo' AND `register`.`marital_status_id` IN ('" . str_replace_last(",", "", $userMaritalStatusId) . "') AND `register`.`physical_status_id` IN ('" . str_replace_last(",", "", $userPhysicalStatusId) . "') AND `register`.`religion_id` = '$userReligionId' AND `register`.`cast_id` IN ('" . str_replace_last(",", "", $userCastId) . "') AND `register`.`jobtitle_id` IN ('" . str_replace_last(",", "", $userJobTitleId) . "') AND `register`.`highest_education_id` IN ('" . str_replace_last(",", "", $userHighestEducationId) . "') AND `register`.`p_state_id` = '$userStateId' AND `register`.`p_district_id` IN ('" . str_replace_last(",", "", $userDistrictId) . "') AND `register`.`income_id` = '$userIncomeId' AND `register`.`web_id` = `users`.`id` AND `register`.`p_state_id` = `states`.`id` AND `register`.`religion_id` = `religion`.`religion_id` AND `register`.`p_country_id` = `country`.`id` AND `register`.`income_id` = `income`.`income_id` AND `register`.`marital_status_id` = `marital_status`.`marital_status_id` AND `register`.`physical_status_id` = `physical_status`.`physical_status_id` AND `register`.`jobtitle_id` = `job`.`job_id` AND `register`.`highest_education_id` = `education`.`education_id`  AND `register`.`p_district_id` = `districts`.`id` AND `register`.`complexion_id` = `complexion`.`complexion_id` AND `register`.`body_type_id` = `body_type`.`body_type_id` AND `register`.`family_status_id` = `family_status`.`family_status_id` AND `register`.`cast_id` = `cast`.`cast_id` AND `documents`.`web_id` = `users`.`id` AND `documents`.`type`= 'profile_photo' AND `customer_package`.`web_id` = `users`.`id` AND `customer_package`.`sub_id` = `packages`.`id` AND `register`.`web_id` != '$userId'  
+          DATE_FORMAT(FROM_DAYS(DATEDIFF(now(),`register`.`dob`)), '%Y')+0 BETWEEN '$ageFrom' AND '$ageTo'
+	AND `register`.`height` BETWEEN '$userHeightFrom' AND '$userHeightTo' AND `register`.`marital_status_id` IN ('" . str_replace_last(",", "", $userMaritalStatusId) . "') AND `register`.`physical_status_id` IN ('" . str_replace_last(",", "", $userPhysicalStatusId) . "') AND `register`.`religion_id` = '$userReligionId' AND `register`.`cast_id` IN ('" . str_replace_last(",", "", $userCastId) . "') AND `register`.`jobtitle_id` IN ('" . str_replace_last(",", "", $userJobTitleId) . "') AND `register`.`highest_education_id` IN ('" . str_replace_last(",", "", $userHighestEducationId) . "') AND `register`.`p_state_id` = '$userStateId' AND `register`.`p_district_id` IN ('" . str_replace_last(",", "", $userDistrictId) . "') AND `register`.`income_id` = '$userIncomeId' AND `register`.`web_id` = `users`.`id` AND `register`.`p_state_id` = `states`.`id` AND `register`.`religion_id` = `religion`.`religion_id` AND `register`.`p_country_id` = `country`.`id` AND `register`.`income_id` = `income`.`income_id` AND `register`.`marital_status_id` = `marital_status`.`marital_status_id` AND `register`.`physical_status_id` = `physical_status`.`physical_status_id` AND `register`.`jobtitle_id` = `job`.`job_id` AND `register`.`highest_education_id` = `education`.`education_id`  AND `register`.`p_district_id` = `districts`.`id` AND `register`.`complexion_id` = `complexion`.`complexion_id` AND `register`.`body_type_id` = `body_type`.`body_type_id` AND `register`.`family_status_id` = `family_status`.`family_status_id` AND `register`.`cast_id` = `cast`.`cast_id` AND `documents`.`web_id` = `users`.`id` AND `documents`.`type`= 'profile_photo' AND `customer_package`.`web_id` = `users`.`id` AND `customer_package`.`sub_id` = `packages`.`id` AND `register`.`web_id` != '$userId'  
 ORDER BY
     `users`.`created_on`
 DESC";
@@ -1104,7 +1109,7 @@ DESC";
 		return $query->result();
 	}
 
-	function getMatchesLevel7($userId, $userHeightFrom, $userHeightTo, $userMaritalStatusId, $userPhysicalStatusId, $userReligionId, $userCastId, $userJobTitleId, $userHighestEducationId, $userStateId, $userDistrictId)
+	function getMatchesLevel7($ageFrom, $ageTo, $userId, $userHeightFrom, $userHeightTo, $userMaritalStatusId, $userPhysicalStatusId, $userReligionId, $userCastId, $userJobTitleId, $userHighestEducationId, $userStateId, $userDistrictId)
 	{
 		$sql = "SELECT
     `register`.`reg_id`,
@@ -1306,7 +1311,8 @@ FROM
      `customer_package`,
      `packages`
 WHERE
-    `register`.`height` BETWEEN '$userHeightFrom' AND '$userHeightTo' AND `register`.`marital_status_id` IN ('" . str_replace_last(",", "", $userMaritalStatusId) . "') AND `register`.`physical_status_id` IN ('" . str_replace_last(",", "", $userPhysicalStatusId) . "') AND `register`.`religion_id` = '$userReligionId' AND `register`.`cast_id` IN ('" . str_replace_last(",", "", $userCastId) . "') AND `register`.`jobtitle_id` IN ('" . str_replace_last(",", "", $userJobTitleId) . "') AND `register`.`highest_education_id` IN ('" . str_replace_last(",", "", $userHighestEducationId) . "') AND `register`.`p_state_id` = '$userStateId' AND `register`.`p_district_id` IN ('" . str_replace_last(",", "", $userDistrictId) . "') AND `register`.`web_id` = `users`.`id` AND `register`.`p_state_id` = `states`.`id` AND `register`.`religion_id` = `religion`.`religion_id` AND `register`.`p_country_id` = `country`.`id` AND `register`.`income_id` = `income`.`income_id` AND `register`.`marital_status_id` = `marital_status`.`marital_status_id` AND `register`.`physical_status_id` = `physical_status`.`physical_status_id` AND `register`.`jobtitle_id` = `job`.`job_id` AND `register`.`highest_education_id` = `education`.`education_id`  AND `register`.`p_district_id` = `districts`.`id` AND `register`.`complexion_id` = `complexion`.`complexion_id` AND `register`.`body_type_id` = `body_type`.`body_type_id` AND `register`.`family_status_id` = `family_status`.`family_status_id` AND `register`.`cast_id` = `cast`.`cast_id` AND `documents`.`web_id` = `users`.`id` AND `documents`.`type`= 'profile_photo' AND `customer_package`.`web_id` = `users`.`id` AND `customer_package`.`sub_id` = `packages`.`id` AND `register`.`web_id` != '$userId'  
+          DATE_FORMAT(FROM_DAYS(DATEDIFF(now(),`register`.`dob`)), '%Y')+0 BETWEEN '$ageFrom' AND '$ageTo'
+	AND `register`.`height` BETWEEN '$userHeightFrom' AND '$userHeightTo' AND `register`.`marital_status_id` IN ('" . str_replace_last(",", "", $userMaritalStatusId) . "') AND `register`.`physical_status_id` IN ('" . str_replace_last(",", "", $userPhysicalStatusId) . "') AND `register`.`religion_id` = '$userReligionId' AND `register`.`cast_id` IN ('" . str_replace_last(",", "", $userCastId) . "') AND `register`.`jobtitle_id` IN ('" . str_replace_last(",", "", $userJobTitleId) . "') AND `register`.`highest_education_id` IN ('" . str_replace_last(",", "", $userHighestEducationId) . "') AND `register`.`p_state_id` = '$userStateId' AND `register`.`p_district_id` IN ('" . str_replace_last(",", "", $userDistrictId) . "') AND `register`.`web_id` = `users`.`id` AND `register`.`p_state_id` = `states`.`id` AND `register`.`religion_id` = `religion`.`religion_id` AND `register`.`p_country_id` = `country`.`id` AND `register`.`income_id` = `income`.`income_id` AND `register`.`marital_status_id` = `marital_status`.`marital_status_id` AND `register`.`physical_status_id` = `physical_status`.`physical_status_id` AND `register`.`jobtitle_id` = `job`.`job_id` AND `register`.`highest_education_id` = `education`.`education_id`  AND `register`.`p_district_id` = `districts`.`id` AND `register`.`complexion_id` = `complexion`.`complexion_id` AND `register`.`body_type_id` = `body_type`.`body_type_id` AND `register`.`family_status_id` = `family_status`.`family_status_id` AND `register`.`cast_id` = `cast`.`cast_id` AND `documents`.`web_id` = `users`.`id` AND `documents`.`type`= 'profile_photo' AND `customer_package`.`web_id` = `users`.`id` AND `customer_package`.`sub_id` = `packages`.`id` AND `register`.`web_id` != '$userId'  
 ORDER BY
     `users`.`created_on`
 DESC";
@@ -1314,7 +1320,7 @@ DESC";
 		return $query->result();
 	}
 
-	function getMatchesLevel8($userId, $userHeightFrom, $userHeightTo, $userMaritalStatusId, $userPhysicalStatusId, $userReligionId, $userCastId, $userJobTitleId, $userHighestEducationId, $userStateId)
+	function getMatchesLevel8($ageFrom, $ageTo, $userId, $userHeightFrom, $userHeightTo, $userMaritalStatusId, $userPhysicalStatusId, $userReligionId, $userCastId, $userJobTitleId, $userHighestEducationId, $userStateId)
 	{
 		$sql = "SELECT
     `register`.`reg_id`,
@@ -1516,7 +1522,8 @@ FROM
      `customer_package`,
      `packages`
 WHERE
-    `register`.`height` BETWEEN '$userHeightFrom' AND '$userHeightTo' AND `register`.`marital_status_id` IN ('" . str_replace_last(",", "", $userMaritalStatusId) . "') AND `register`.`physical_status_id` IN ('" . str_replace_last(",", "", $userPhysicalStatusId) . "') AND `register`.`religion_id` = '$userReligionId' AND `register`.`cast_id` IN ('" . str_replace_last(",", "", $userCastId) . "') AND `register`.`jobtitle_id` IN ('" . str_replace_last(",", "", $userJobTitleId) . "') AND `register`.`highest_education_id` IN ('" . str_replace_last(",", "", $userHighestEducationId) . "') AND `register`.`p_state_id` = '$userStateId' AND `register`.`web_id` = `users`.`id` AND `register`.`p_state_id` = `states`.`id` AND `register`.`religion_id` = `religion`.`religion_id` AND `register`.`p_country_id` = `country`.`id` AND `register`.`income_id` = `income`.`income_id` AND `register`.`marital_status_id` = `marital_status`.`marital_status_id` AND `register`.`physical_status_id` = `physical_status`.`physical_status_id` AND `register`.`jobtitle_id` = `job`.`job_id` AND `register`.`highest_education_id` = `education`.`education_id`  AND `register`.`p_district_id` = `districts`.`id` AND `register`.`complexion_id` = `complexion`.`complexion_id` AND `register`.`body_type_id` = `body_type`.`body_type_id` AND `register`.`family_status_id` = `family_status`.`family_status_id` AND `register`.`cast_id` = `cast`.`cast_id` AND `documents`.`web_id` = `users`.`id` AND `documents`.`type`= 'profile_photo' AND `customer_package`.`web_id` = `users`.`id` AND `customer_package`.`sub_id` = `packages`.`id` AND `register`.`web_id` != '$userId'  
+          DATE_FORMAT(FROM_DAYS(DATEDIFF(now(),`register`.`dob`)), '%Y')+0 BETWEEN '$ageFrom' AND '$ageTo'
+	AND `register`.`height` BETWEEN '$userHeightFrom' AND '$userHeightTo' AND `register`.`marital_status_id` IN ('" . str_replace_last(",", "", $userMaritalStatusId) . "') AND `register`.`physical_status_id` IN ('" . str_replace_last(",", "", $userPhysicalStatusId) . "') AND `register`.`religion_id` = '$userReligionId' AND `register`.`cast_id` IN ('" . str_replace_last(",", "", $userCastId) . "') AND `register`.`jobtitle_id` IN ('" . str_replace_last(",", "", $userJobTitleId) . "') AND `register`.`highest_education_id` IN ('" . str_replace_last(",", "", $userHighestEducationId) . "') AND `register`.`p_state_id` = '$userStateId' AND `register`.`web_id` = `users`.`id` AND `register`.`p_state_id` = `states`.`id` AND `register`.`religion_id` = `religion`.`religion_id` AND `register`.`p_country_id` = `country`.`id` AND `register`.`income_id` = `income`.`income_id` AND `register`.`marital_status_id` = `marital_status`.`marital_status_id` AND `register`.`physical_status_id` = `physical_status`.`physical_status_id` AND `register`.`jobtitle_id` = `job`.`job_id` AND `register`.`highest_education_id` = `education`.`education_id`  AND `register`.`p_district_id` = `districts`.`id` AND `register`.`complexion_id` = `complexion`.`complexion_id` AND `register`.`body_type_id` = `body_type`.`body_type_id` AND `register`.`family_status_id` = `family_status`.`family_status_id` AND `register`.`cast_id` = `cast`.`cast_id` AND `documents`.`web_id` = `users`.`id` AND `documents`.`type`= 'profile_photo' AND `customer_package`.`web_id` = `users`.`id` AND `customer_package`.`sub_id` = `packages`.`id` AND `register`.`web_id` != '$userId'  
 ORDER BY
     `users`.`created_on`
 DESC";
@@ -1524,7 +1531,7 @@ DESC";
 		return $query->result();
 	}
 
-	function getMatchesLevel9($userId, $userHeightFrom, $userHeightTo, $userMaritalStatusId, $userPhysicalStatusId, $userReligionId, $userCastId, $userJobTitleId, $userHighestEducationId)
+	function getMatchesLevel9($ageFrom, $ageTo, $userId, $userHeightFrom, $userHeightTo, $userMaritalStatusId, $userPhysicalStatusId, $userReligionId, $userCastId, $userJobTitleId, $userHighestEducationId)
 	{
 		$sql = "SELECT
     `register`.`reg_id`,
@@ -1726,7 +1733,8 @@ FROM
      `customer_package`,
      `packages`
 WHERE
-    `register`.`height` BETWEEN '$userHeightFrom' AND '$userHeightTo' AND `register`.`marital_status_id` IN ('" . str_replace_last(",", "", $userMaritalStatusId) . "') AND `register`.`physical_status_id` IN ('" . str_replace_last(",", "", $userPhysicalStatusId) . "') AND `register`.`religion_id` = '$userReligionId' AND `register`.`cast_id` IN ('" . str_replace_last(",", "", $userCastId) . "') AND `register`.`jobtitle_id` IN ('" . str_replace_last(",", "", $userJobTitleId) . "') AND `register`.`highest_education_id` IN ('" . str_replace_last(",", "", $userHighestEducationId) . "') AND `register`.`web_id` = `users`.`id` AND `register`.`p_state_id` = `states`.`id` AND `register`.`religion_id` = `religion`.`religion_id` AND `register`.`p_country_id` = `country`.`id` AND `register`.`income_id` = `income`.`income_id` AND `register`.`marital_status_id` = `marital_status`.`marital_status_id` AND `register`.`physical_status_id` = `physical_status`.`physical_status_id` AND `register`.`jobtitle_id` = `job`.`job_id` AND `register`.`highest_education_id` = `education`.`education_id`  AND `register`.`p_district_id` = `districts`.`id` AND `register`.`complexion_id` = `complexion`.`complexion_id` AND `register`.`body_type_id` = `body_type`.`body_type_id` AND `register`.`family_status_id` = `family_status`.`family_status_id` AND `register`.`cast_id` = `cast`.`cast_id` AND `documents`.`web_id` = `users`.`id` AND `documents`.`type`= 'profile_photo' AND `customer_package`.`web_id` = `users`.`id` AND `customer_package`.`sub_id` = `packages`.`id` AND `register`.`web_id` != '$userId'  
+          DATE_FORMAT(FROM_DAYS(DATEDIFF(now(),`register`.`dob`)), '%Y')+0 BETWEEN '$ageFrom' AND '$ageTo'
+	AND `register`.`height` BETWEEN '$userHeightFrom' AND '$userHeightTo' AND `register`.`marital_status_id` IN ('" . str_replace_last(",", "", $userMaritalStatusId) . "') AND `register`.`physical_status_id` IN ('" . str_replace_last(",", "", $userPhysicalStatusId) . "') AND `register`.`religion_id` = '$userReligionId' AND `register`.`cast_id` IN ('" . str_replace_last(",", "", $userCastId) . "') AND `register`.`jobtitle_id` IN ('" . str_replace_last(",", "", $userJobTitleId) . "') AND `register`.`highest_education_id` IN ('" . str_replace_last(",", "", $userHighestEducationId) . "') AND `register`.`web_id` = `users`.`id` AND `register`.`p_state_id` = `states`.`id` AND `register`.`religion_id` = `religion`.`religion_id` AND `register`.`p_country_id` = `country`.`id` AND `register`.`income_id` = `income`.`income_id` AND `register`.`marital_status_id` = `marital_status`.`marital_status_id` AND `register`.`physical_status_id` = `physical_status`.`physical_status_id` AND `register`.`jobtitle_id` = `job`.`job_id` AND `register`.`highest_education_id` = `education`.`education_id`  AND `register`.`p_district_id` = `districts`.`id` AND `register`.`complexion_id` = `complexion`.`complexion_id` AND `register`.`body_type_id` = `body_type`.`body_type_id` AND `register`.`family_status_id` = `family_status`.`family_status_id` AND `register`.`cast_id` = `cast`.`cast_id` AND `documents`.`web_id` = `users`.`id` AND `documents`.`type`= 'profile_photo' AND `customer_package`.`web_id` = `users`.`id` AND `customer_package`.`sub_id` = `packages`.`id` AND `register`.`web_id` != '$userId'  
 ORDER BY
     `users`.`created_on`
 DESC";
@@ -1734,7 +1742,7 @@ DESC";
 		return $query->result();
 	}
 
-	function getMatchesLevel10($userId, $userHeightFrom, $userHeightTo, $userMaritalStatusId, $userPhysicalStatusId, $userReligionId, $userCastId, $userJobTitleId)
+	function getMatchesLevel10($ageFrom, $ageTo, $userId, $userHeightFrom, $userHeightTo, $userMaritalStatusId, $userPhysicalStatusId, $userReligionId, $userCastId, $userJobTitleId)
 	{
 		$sql = "SELECT
     `register`.`reg_id`,
@@ -1936,7 +1944,8 @@ FROM
      `customer_package`,
      `packages`
 WHERE
-    `register`.`height` BETWEEN '$userHeightFrom' AND '$userHeightTo' AND `register`.`marital_status_id` IN ('" . str_replace_last(",", "", $userMaritalStatusId) . "') AND `register`.`physical_status_id` IN ('" . str_replace_last(",", "", $userPhysicalStatusId) . "') AND `register`.`religion_id` = '$userReligionId' AND `register`.`cast_id` IN ('" . str_replace_last(",", "", $userCastId) . "') AND `register`.`jobtitle_id` IN ('" . str_replace_last(",", "", $userJobTitleId) . "') AND `register`.`web_id` = `users`.`id` AND `register`.`p_state_id` = `states`.`id` AND `register`.`religion_id` = `religion`.`religion_id` AND `register`.`p_country_id` = `country`.`id` AND `register`.`income_id` = `income`.`income_id` AND `register`.`marital_status_id` = `marital_status`.`marital_status_id` AND `register`.`physical_status_id` = `physical_status`.`physical_status_id` AND `register`.`jobtitle_id` = `job`.`job_id` AND `register`.`highest_education_id` = `education`.`education_id`  AND `register`.`p_district_id` = `districts`.`id` AND `register`.`complexion_id` = `complexion`.`complexion_id` AND `register`.`body_type_id` = `body_type`.`body_type_id` AND `register`.`family_status_id` = `family_status`.`family_status_id` AND `register`.`cast_id` = `cast`.`cast_id` AND `documents`.`web_id` = `users`.`id` AND `documents`.`type`= 'profile_photo' AND `customer_package`.`web_id` = `users`.`id` AND `customer_package`.`sub_id` = `packages`.`id` AND `register`.`web_id` != '$userId'  
+          DATE_FORMAT(FROM_DAYS(DATEDIFF(now(),`register`.`dob`)), '%Y')+0 BETWEEN '$ageFrom' AND '$ageTo'
+	AND `register`.`height` BETWEEN '$userHeightFrom' AND '$userHeightTo' AND `register`.`marital_status_id` IN ('" . str_replace_last(",", "", $userMaritalStatusId) . "') AND `register`.`physical_status_id` IN ('" . str_replace_last(",", "", $userPhysicalStatusId) . "') AND `register`.`religion_id` = '$userReligionId' AND `register`.`cast_id` IN ('" . str_replace_last(",", "", $userCastId) . "') AND `register`.`jobtitle_id` IN ('" . str_replace_last(",", "", $userJobTitleId) . "') AND `register`.`web_id` = `users`.`id` AND `register`.`p_state_id` = `states`.`id` AND `register`.`religion_id` = `religion`.`religion_id` AND `register`.`p_country_id` = `country`.`id` AND `register`.`income_id` = `income`.`income_id` AND `register`.`marital_status_id` = `marital_status`.`marital_status_id` AND `register`.`physical_status_id` = `physical_status`.`physical_status_id` AND `register`.`jobtitle_id` = `job`.`job_id` AND `register`.`highest_education_id` = `education`.`education_id`  AND `register`.`p_district_id` = `districts`.`id` AND `register`.`complexion_id` = `complexion`.`complexion_id` AND `register`.`body_type_id` = `body_type`.`body_type_id` AND `register`.`family_status_id` = `family_status`.`family_status_id` AND `register`.`cast_id` = `cast`.`cast_id` AND `documents`.`web_id` = `users`.`id` AND `documents`.`type`= 'profile_photo' AND `customer_package`.`web_id` = `users`.`id` AND `customer_package`.`sub_id` = `packages`.`id` AND `register`.`web_id` != '$userId'  
 ORDER BY
     `users`.`created_on`
 DESC";
@@ -1944,7 +1953,7 @@ DESC";
 		return $query->result();
 	}
 
-	function getMatchesLevel11($userId, $userHeightFrom, $userHeightTo, $userMaritalStatusId, $userPhysicalStatusId, $userReligionId, $userCastId)
+	function getMatchesLevel11($ageFrom, $ageTo, $userId, $userHeightFrom, $userHeightTo, $userMaritalStatusId, $userPhysicalStatusId, $userReligionId, $userCastId)
 	{
 		$sql = "SELECT
     `register`.`reg_id`,
@@ -2146,7 +2155,8 @@ FROM
      `customer_package`,
      `packages`
 WHERE
-    `register`.`height` BETWEEN '$userHeightFrom' AND '$userHeightTo' AND `register`.`marital_status_id` IN ('" . str_replace_last(",", "", $userMaritalStatusId) . "') AND `register`.`physical_status_id` IN ('" . str_replace_last(",", "", $userPhysicalStatusId) . "') AND `register`.`religion_id` = '$userReligionId' AND `register`.`cast_id` IN ('" . str_replace_last(",", "", $userCastId) . "') AND `register`.`web_id` = `users`.`id` AND `register`.`p_state_id` = `states`.`id` AND `register`.`religion_id` = `religion`.`religion_id` AND `register`.`p_country_id` = `country`.`id` AND `register`.`income_id` = `income`.`income_id` AND `register`.`marital_status_id` = `marital_status`.`marital_status_id` AND `register`.`physical_status_id` = `physical_status`.`physical_status_id` AND `register`.`jobtitle_id` = `job`.`job_id` AND `register`.`highest_education_id` = `education`.`education_id`  AND `register`.`p_district_id` = `districts`.`id` AND `register`.`complexion_id` = `complexion`.`complexion_id` AND `register`.`body_type_id` = `body_type`.`body_type_id` AND `register`.`family_status_id` = `family_status`.`family_status_id` AND `register`.`cast_id` = `cast`.`cast_id` AND `documents`.`web_id` = `users`.`id` AND `documents`.`type`= 'profile_photo' AND `customer_package`.`web_id` = `users`.`id` AND `customer_package`.`sub_id` = `packages`.`id` AND `register`.`web_id` != '$userId'  
+          DATE_FORMAT(FROM_DAYS(DATEDIFF(now(),`register`.`dob`)), '%Y')+0 BETWEEN '$ageFrom' AND '$ageTo'
+	AND `register`.`height` BETWEEN '$userHeightFrom' AND '$userHeightTo' AND `register`.`marital_status_id` IN ('" . str_replace_last(",", "", $userMaritalStatusId) . "') AND `register`.`physical_status_id` IN ('" . str_replace_last(",", "", $userPhysicalStatusId) . "') AND `register`.`religion_id` = '$userReligionId' AND `register`.`cast_id` IN ('" . str_replace_last(",", "", $userCastId) . "') AND `register`.`web_id` = `users`.`id` AND `register`.`p_state_id` = `states`.`id` AND `register`.`religion_id` = `religion`.`religion_id` AND `register`.`p_country_id` = `country`.`id` AND `register`.`income_id` = `income`.`income_id` AND `register`.`marital_status_id` = `marital_status`.`marital_status_id` AND `register`.`physical_status_id` = `physical_status`.`physical_status_id` AND `register`.`jobtitle_id` = `job`.`job_id` AND `register`.`highest_education_id` = `education`.`education_id`  AND `register`.`p_district_id` = `districts`.`id` AND `register`.`complexion_id` = `complexion`.`complexion_id` AND `register`.`body_type_id` = `body_type`.`body_type_id` AND `register`.`family_status_id` = `family_status`.`family_status_id` AND `register`.`cast_id` = `cast`.`cast_id` AND `documents`.`web_id` = `users`.`id` AND `documents`.`type`= 'profile_photo' AND `customer_package`.`web_id` = `users`.`id` AND `customer_package`.`sub_id` = `packages`.`id` AND `register`.`web_id` != '$userId'  
 ORDER BY
     `users`.`created_on`
 DESC";
@@ -2154,7 +2164,7 @@ DESC";
 		return $query->result();
 	}
 
-	function getMatchesLevel12($userId, $userHeightFrom, $userHeightTo, $userMaritalStatusId, $userPhysicalStatusId, $userReligionId)
+	function getMatchesLevel12($ageFrom, $ageTo, $userId, $userHeightFrom, $userHeightTo, $userMaritalStatusId, $userPhysicalStatusId, $userReligionId)
 	{
 		$sql = "SELECT
     `register`.`reg_id`,
@@ -2356,7 +2366,8 @@ FROM
      `customer_package`,
      `packages`
 WHERE
-    `register`.`height` BETWEEN '$userHeightFrom' AND '$userHeightTo' AND `register`.`marital_status_id` IN ('" . str_replace_last(",", "", $userMaritalStatusId) . "') AND `register`.`physical_status_id` IN ('" . str_replace_last(",", "", $userPhysicalStatusId) . "') AND `register`.`religion_id` = '$userReligionId' AND `register`.`web_id` = `users`.`id` AND `register`.`p_state_id` = `states`.`id` AND `register`.`religion_id` = `religion`.`religion_id` AND `register`.`p_country_id` = `country`.`id` AND `register`.`income_id` = `income`.`income_id` AND `register`.`marital_status_id` = `marital_status`.`marital_status_id` AND `register`.`physical_status_id` = `physical_status`.`physical_status_id` AND `register`.`jobtitle_id` = `job`.`job_id` AND `register`.`highest_education_id` = `education`.`education_id`  AND `register`.`p_district_id` = `districts`.`id` AND `register`.`complexion_id` = `complexion`.`complexion_id` AND `register`.`body_type_id` = `body_type`.`body_type_id` AND `register`.`family_status_id` = `family_status`.`family_status_id` AND `register`.`cast_id` = `cast`.`cast_id` AND `documents`.`web_id` = `users`.`id` AND `documents`.`type`= 'profile_photo' AND `customer_package`.`web_id` = `users`.`id` AND `customer_package`.`sub_id` = `packages`.`id` AND `register`.`web_id` != '$userId'  
+          DATE_FORMAT(FROM_DAYS(DATEDIFF(now(),`register`.`dob`)), '%Y')+0 BETWEEN '$ageFrom' AND '$ageTo'
+	AND `register`.`height` BETWEEN '$userHeightFrom' AND '$userHeightTo' AND `register`.`marital_status_id` IN ('" . str_replace_last(",", "", $userMaritalStatusId) . "') AND `register`.`physical_status_id` IN ('" . str_replace_last(",", "", $userPhysicalStatusId) . "') AND `register`.`religion_id` = '$userReligionId' AND `register`.`web_id` = `users`.`id` AND `register`.`p_state_id` = `states`.`id` AND `register`.`religion_id` = `religion`.`religion_id` AND `register`.`p_country_id` = `country`.`id` AND `register`.`income_id` = `income`.`income_id` AND `register`.`marital_status_id` = `marital_status`.`marital_status_id` AND `register`.`physical_status_id` = `physical_status`.`physical_status_id` AND `register`.`jobtitle_id` = `job`.`job_id` AND `register`.`highest_education_id` = `education`.`education_id`  AND `register`.`p_district_id` = `districts`.`id` AND `register`.`complexion_id` = `complexion`.`complexion_id` AND `register`.`body_type_id` = `body_type`.`body_type_id` AND `register`.`family_status_id` = `family_status`.`family_status_id` AND `register`.`cast_id` = `cast`.`cast_id` AND `documents`.`web_id` = `users`.`id` AND `documents`.`type`= 'profile_photo' AND `customer_package`.`web_id` = `users`.`id` AND `customer_package`.`sub_id` = `packages`.`id` AND `register`.`web_id` != '$userId'  
 ORDER BY
     `users`.`created_on`
 DESC";
@@ -2364,7 +2375,7 @@ DESC";
 		return $query->result();
 	}
 
-	function getMatchesLevel13($userId, $userHeightFrom, $userHeightTo, $userMaritalStatusId, $userPhysicalStatusId)
+	function getMatchesLevel13($ageFrom, $ageTo, $userId, $userHeightFrom, $userHeightTo, $userMaritalStatusId, $userPhysicalStatusId)
 	{
 		$sql = "SELECT
     `register`.`reg_id`,
@@ -2566,7 +2577,8 @@ FROM
      `customer_package`,
      `packages`
 WHERE
-    `register`.`height` BETWEEN '$userHeightFrom' AND '$userHeightTo' 
+      DATE_FORMAT(FROM_DAYS(DATEDIFF(now(),`register`.`dob`)), '%Y')+0 BETWEEN '$ageFrom' AND '$ageTo'
+	AND `register`.`height` BETWEEN '$userHeightFrom' AND '$userHeightTo' 
   AND `register`.`marital_status_id` IN ('" . str_replace_last(",", "", $userMaritalStatusId) . "') 
   AND `register`.`physical_status_id` IN ('" . str_replace_last(",", "", $userPhysicalStatusId) . "') 
   AND `register`.`web_id` = `users`.`id` 

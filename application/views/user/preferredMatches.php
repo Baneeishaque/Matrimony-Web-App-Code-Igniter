@@ -96,13 +96,13 @@
 													<span thumb style="left:30%;"></span>
 													<span thumb style="left:60%;"></span>
 													<div sign style="left:30%;">
-														<span id="value">25</span>
-													</div>
-													<div sign style="left:60%;">
 														<span id="value">30</span>
 													</div>
+													<div sign style="left:60%;">
+														<span id="value">60</span>
+													</div>
 												</div>
-												<input type="range" tabindex="0" value="25" max="80" min="18" step="1"
+												<input type="range" tabindex="0" value="30" max="100" min="0" step="1"
 													   oninput="
   this.value=Math.min(this.value,this.parentNode.childNodes[5].value-1);
   var value=(100/(parseInt(this.max)-parseInt(this.min)))*parseInt(this.value)-(100/(parseInt(this.max)-parseInt(this.min)))*parseInt(this.min);
@@ -110,8 +110,9 @@
   children[1].style.width=value+'%';
   children[5].style.left=value+'%';
   children[7].style.left=value+'%';children[11].style.left=value+'%';
-  children[11].childNodes[1].innerHTML=this.value;"/>
-												<input type="range" tabindex="0" value="30" max="80" min="18" step="1"
+  children[11].childNodes[1].innerHTML=this.value;" id="ageLeft"/>
+
+												<input type="range" tabindex="0" value="60" max="100" min="0" step="1"
 													   oninput="
   this.value=Math.max(this.value,this.parentNode.childNodes[3].value-(-1));
   var value=(100/(parseInt(this.max)-parseInt(this.min)))*parseInt(this.value)-(100/(parseInt(this.max)-parseInt(this.min)))*parseInt(this.min);
@@ -119,7 +120,7 @@
   children[3].style.width=(100-value)+'%';
   children[5].style.right=(100-value)+'%';
   children[9].style.left=value+'%';children[13].style.left=value+'%';
-  children[13].childNodes[1].innerHTML=this.value;"/>
+  children[13].childNodes[1].innerHTML=this.value;" id="ageRight"/>
 											</div>
 										</div>
 									</div>
@@ -165,13 +166,13 @@
 													<span thumb style="left:30%;"></span>
 													<span thumb style="left:60%;"></span>
 													<div sign style="left:30%;">
-														<span id="value">165</span>
+														<span id="value">30</span>
 													</div>
 													<div sign style="left:60%;">
-														<span id="value">175</span>
+														<span id="value">60</span>
 													</div>
 												</div>
-												<input type="range" tabindex="0" value="165" max="250" min="60" step="1"
+												<input type="range" tabindex="0" value="30" max="100" min="0" step="1"
 													   oninput="
         this.value=Math.min(this.value,this.parentNode.childNodes[5].value-1);
         var value=(100/(parseInt(this.max)-parseInt(this.min)))*parseInt(this.value)-(100/(parseInt(this.max)-parseInt(this.min)))*parseInt(this.min);
@@ -180,7 +181,7 @@
         children[5].style.left=value+'%';
         children[7].style.left=value+'%';children[11].style.left=value+'%';
         children[11].childNodes[1].innerHTML=this.value;" id="heightLeft"/>
-												<input type="range" tabindex="0" value="175" max="250" min="60" step="1"
+												<input type="range" tabindex="0" value="60" max="100" min="0" step="1"
 													   oninput="
         this.value=Math.max(this.value,this.parentNode.childNodes[3].value-(-1));
         var value=(100/(parseInt(this.max)-parseInt(this.min)))*parseInt(this.value)-(100/(parseInt(this.max)-parseInt(this.min)))*parseInt(this.min);
@@ -540,9 +541,10 @@
 									<div class="row rw-bordr">
 										<div class="col-lg-6 col-md-6 col-sm-6 col-12">
 											<h6 class="ser-res-details"><i class="far fa-user-circle icn-res"></i>&nbsp;
-												27
+												<?php echo dobToAgeInYears($result->dob); ?>
 												Yrs
-												| <?php echo $result->height; ?>cm-5 ft 2 in</h6>
+												| <?php echo $result->height; ?>cm
+												- <?php echo cm2feet($result->height); ?></h6>
 										</div>
 										<div class="col-lg-6 col-md-6 col-sm-6 col-12">
 											<h6 class="ser-res-details"><i
@@ -626,10 +628,14 @@
 	heightRightSlider.onchange = onHeightSliderChanged;
 	heightLeftSlider.onchange = onHeightSliderChanged;
 
+	let minimumHeight = heightLeftSlider.value;
+	let maximumHeight = heightRightSlider.value;
+
 	function onHeightSliderChanged() {
 
-		const minimumHeight = heightLeftSlider.value;
-		const maximumHeight = heightRightSlider.value;
+		minimumHeight = heightLeftSlider.value;
+		maximumHeight = heightRightSlider.value;
+
 		console.log("Limits : " + minimumHeight + " " + maximumHeight);
 
 		$.ajax({
@@ -691,7 +697,7 @@
 							'<div class="row rw-bordr">' +
 							'<div class="col-lg-6 col-md-6 col-sm-6 col-12">' +
 							'<h6 class="ser-res-details"><i class="far fa-user-circle icn-res"></i>&nbsp;' +
-							+getAgeFromDob(filteredData[i].dob) +
+							getAgeFromDob(filteredData[i].dob) +
 							' Yrs' +
 							' | ' + filteredData[i].height + 'cm - ' + centimeterToFeet(filteredData[i].height) + '</h6>' +
 							'</div>' +
@@ -749,34 +755,164 @@
 				}
 			}
 		});
+	}
 
-		function getAgeFromDob(date) {
+	function getAgeFromDob(date) {
 
-			const dob = new Date(date);
-			console.log(dob);
+		const dob = new Date(date);
+		console.log(dob);
 
-			//calculate month difference from current date in time
-			const month_diff = Date.now() - dob.getTime();
+		//calculate month difference from current date in time
+		const month_diff = Date.now() - dob.getTime();
 
-			//convert the calculated difference in date format
-			const age_dt = new Date(month_diff);
+		//convert the calculated difference in date format
+		const age_dt = new Date(month_diff);
 
-			//extract year from date
-			const year = age_dt.getUTCFullYear();
+		//extract year from date
+		const year = age_dt.getUTCFullYear();
 
-			//now calculate the age of the user
-			const age = Math.abs(year - 1970);
+		//now calculate the age of the user
+		const age = Math.abs(year - 1970);
 
-			console.log(age);
-			return age;
-		}
+		console.log(age);
+		return age;
+	}
 
-		function centimeterToFeet(n) {
+	function centimeterToFeet(n) {
 
-			var realFeet = ((n * 0.393700) / 12);
-			var feet = Math.floor(realFeet);
-			var inches = Math.round((realFeet - feet) * 12);
-			return feet + " ft " + inches + ' in';
-		}
+		var realFeet = ((n * 0.393700) / 12);
+		var feet = Math.floor(realFeet);
+		var inches = Math.round((realFeet - feet) * 12);
+		return feet + " ft " + inches + ' in';
+	}
+
+	const ageLeftSlider = document.getElementById("ageLeft");
+	const ageRightSlider = document.getElementById("ageRight");
+	ageLeftSlider.onchange = onAgeSliderChanged;
+	ageRightSlider.onchange = onAgeSliderChanged;
+
+	function onAgeSliderChanged() {
+
+		const minimumAge = ageLeftSlider.value;
+		const maximumAge = ageRightSlider.value;
+		console.log("Limits : " + minimumAge + " " + maximumAge);
+
+		$.ajax({
+			url: "<?php echo site_url('PreferredMatch/getAgeMatchesFromRegisteredUsers');?>",
+			method: "POST",
+			data: {minHeight: minimumHeight, maxHeight: maximumHeight, minAge: minimumAge, maxAge: maximumAge},
+			success: function (filteredResultsJsonString) {
+
+				filteredResultsJsonString = filteredResultsJsonString.replace(/null/g, "\"\"");
+				console.log("Filter Results JSON String: " + filteredResultsJsonString);
+
+				const filteredResultsJson = JSON.parse(filteredResultsJsonString)
+				console.log("Filter Status : " + filteredResultsJson.status);
+
+				if (filteredResultsJson.status == 1) {
+
+					document.getElementById("searchResultsCount").innerHTML = "0";
+					document.getElementById("searchResults").innerHTML = "";
+
+				} else if (filteredResultsJson.status == 0) {
+
+					const filteredData = filteredResultsJson.data;
+					document.getElementById("searchResultsCount").innerHTML = Object.keys(filteredData).length.toString();
+					console.log("Filter Data : " + filteredData);
+					let html = "";
+					for (let i in filteredData) {
+
+						console.log("HTML : " + html);
+
+						console.log(filteredData[i].toString());
+						html = html +
+							"<div class=\"search-res-wrap\">" +
+							"<div class=\"row\">" +
+							"<div class=\"col-lg-3 col-md-3 col-sm-3 col-12 pd-ser-ryt-0\">" +
+							"<img src=\"<?php echo base_url(); ?>assets/uploads/" + filteredData[i].img_name + "\"class=\"img-fluid ser-res-img\">" +
+							"</div>" +
+
+							'<div class="col-lg-9 col-md-9 col-sm-9 col-12">' +
+							'<div class="row">' +
+							'<div class="col-lg-6 col-md-6 col-12 nme-wrp">' +
+							'<h3 class="ser-res-name">' + filteredData[i].first_name + ' ' + filteredData[i].last_name + '</h3>' +
+							'&nbsp;| &nbsp;<span>' + filteredData[i].web_id + '</span>' +
+							'</div>' +
+							'<div class="col-lg-6 col-md-6 col-12 dis-flx">' +
+							'<h3 class="prem-mem"><i class="fas fa-crown comn-icon"></i>&nbsp; ' + filteredData[i].title + ' Member' +
+							'</h3>' +
+							'<a href="#"><h6 class="chaticon">Chat&nbsp; <i class="fas fa-comments"></i>' +
+							'</h6>' +
+							'</a>' +
+							'</div>' +
+							'</div>' +
+							'<div class="row">' +
+							'<div class="col-lg-12 col-md-12 col-sm-12 col-12 dis-flx">' +
+							'<i class="fas fa-quote-left icn-qutes icn-qute"></i>' +
+							'<p class="moree ser-res-para">' + filteredData[i].aboutme + '</span>' +
+							'</div>' +
+							'</div>' +
+							'<hr>' +
+							'<div class="row rw-bordr">' +
+							'<div class="col-lg-6 col-md-6 col-sm-6 col-12">' +
+							'<h6 class="ser-res-details"><i class="far fa-user-circle icn-res"></i>&nbsp;' +
+							getAgeFromDob(filteredData[i].dob) +
+							' Yrs' +
+							' | ' + filteredData[i].height + 'cm - ' + centimeterToFeet(filteredData[i].height) + '</h6>' +
+							'</div>' +
+							'<div class="col-lg-6 col-md-6 col-sm-6 col-12">' +
+							'<h6 class="ser-res-details">' +
+							'<i class="fas fa-map-marker-alt icn-res loct-ser-res"></i>&nbsp;' +
+							filteredData[i].p_city + ', ' + filteredData[i].state + ', ' + filteredData[i].name +
+							'</h6>' +
+							'</div>' +
+							'</div>' +
+							'<hr>' +
+							'<div class="row rw-bordr">' +
+							'<div class="col-lg-6 col-md-6 col-sm-6 col-12">' +
+							'<h6 class="ser-res-details"><i class="fas fa-book-open icn-res"' +
+							'style="font-size: 11px;"></i>&nbsp;' +
+							filteredData[i].religion + '</h6>' +
+							'</div>' +
+							'<div class="col-lg-6 col-md-6 col-sm-6 col-12">' +
+							'<h6 class="ser-res-details"><i class="fab fa-fort-awesome-alt icn-res"></i>&nbsp;' +
+							filteredData[i].cast + '</h6>' +
+							'</div>' +
+							'</div>' +
+							'<hr>' +
+							'<div class="row rw-bordr">' +
+							'<div class="col-lg-6 col-md-6 col-sm-6 col-12">' +
+							'<h6 class="ser-res-details"><i class="fas fa-graduation-cap icn-res"></i>&nbsp;' +
+							filteredData[i].education + '</h6>' +
+							'</div>' +
+							'<div class="col-lg-6 col-md-6 col-sm-6 col-12">' +
+							'<h6 class="ser-res-details"><i class="fas fa-suitcase icn-res"></i>&nbsp;' +
+							filteredData[i].job_title + '</h6>' +
+							'</div>' +
+							'</div>' +
+							'<hr>' +
+							'<div class="row det-btn-rw">' +
+							'<div class="col-lg-3 col-md-3 col-6 brdr-btn">' +
+							'<a href="#" class="det-res-btn"><i class="fas fa-eye"></i>&nbsp;View Profile</a>' +
+							'</div>' +
+							'<div class="col-lg-3 col-md-3 col-6 brdr-btn">' +
+							'<a href="#" class="det-res-btn"><i class="fas fa-heart"></i>&nbsp;Intrest Send</a>' +
+							'</div>' +
+							'<div class="col-lg-3 col-md-3 col-6 brdr-btn">' +
+							'<a href="#" class="det-res-btn"><i class="fas fa-check"></i>&nbsp;Shortlist</a>' +
+							'</div>' +
+							'<div class="col-lg-3 col-md-3 col-6 brdr-btn">' +
+							'<a href="#" class="det-res-btn">' +
+							'<i class="fas fa-mobile-alt"></i>&nbsp;Contact</a>' +
+							'</div>' +
+							'</div>' +
+							'</div>' +
+							"</div>" +
+							"</div>";
+					}
+					document.getElementById("searchResults").innerHTML = html;
+				}
+			}
+		});
 	}
 </script>

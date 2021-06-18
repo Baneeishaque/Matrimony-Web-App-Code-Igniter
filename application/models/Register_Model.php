@@ -294,7 +294,6 @@ class Register_Model extends CI_Model
 
 			$this->db->insert('partner_prefferences', $data);
 			return true;
-
 		}
 	}
 
@@ -318,4 +317,13 @@ class Register_Model extends CI_Model
 		return $query->result();
 	}
 
+	function getRegisteredUsersWithOutUserIdAndHeightRangesAndAgeRanges($userId, $minimumHeight, $maximumHeight, $minimumAge, $maximumAge)
+	{
+//		Kint::dump($userId);
+//		exit(0);
+		$query = $this->db->query("SELECT `register`.*,`users`.*,`documents`.`img_name`,`packages`.`title`,`states`.*,`country`.*,`religion`.*,`cast`.*,`education`.*,`job`.* FROM `register`,`documents`,`users`,`customer_package`,`packages`,`states`,`country`,`religion`,`cast`,`education`,`job` WHERE DATE_FORMAT(FROM_DAYS(DATEDIFF(now(),`register`.`dob`)), '%Y')+0 BETWEEN '$minimumAge' AND '$maximumAge' AND `register`.`web_id`=`users`.`id` AND `register`.`p_state_id` = `states`.`id` AND `register`.`jobtitle_id` = `job`.`job_id` AND `register`.`web_id`= `documents`.`web_id`  AND `register`.`highest_education_id` = `education`.`education_id` AND `register`.`cast_id` = `cast`.`cast_id`AND `register`.`p_country_id` = `country`.`id` AND `register`.`religion_id` = `religion`.`religion_id` AND `documents`.`type`= 'profile_photo' AND `register`.`web_id`=`customer_package`.`web_id` AND `customer_package`.`sub_id` = `packages`.`id` AND `register`.`web_id`!='" . $userId . "' AND `register`.`height` BETWEEN $minimumHeight AND $maximumHeight");
+//		echo $this->db->last_query();
+//		exit(0);
+		return $query->result();
+	}
 }
